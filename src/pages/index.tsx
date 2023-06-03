@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { useState, useEffect } from 'react';
 import Layout from '@/components/layout/Layout';
 import WorldMap from '@/components/WorldMap';
 import ArrowLink from '@/components/links/ArrowLink';
@@ -7,19 +7,8 @@ import ButtonLink from '@/components/links/ButtonLink';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
-
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-import Vercel from '~/svg/Vercel.svg';
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+import BarChartTotalEmissions from '@/components/graphs/BarChartTotalEmissions';
+import BarChartBudget from '@/components/graphs/BarChartBudget';
 
 
 
@@ -81,18 +70,19 @@ const CarbonBombInfo = () => {
 }
 
 
-const CarbonBombSection = () => {
+const CarbonBombSection = ({ bombsData }) => {
   return (
     <div className="py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="relative">
-            <img
+            <BarChartBudget bombsData={bombsData} />
+            {/* <img
               src="https://uploads-ssl.webflow.com/64206379a2bd1eb2474bc869/642334e16b604aefe233d247_WhatsApp%20Image%202023-03-26%20at%2017.15%202.png"
               className="w-full h-auto px-40"
               alt=""
               loading="lazy"
-            />
+            /> */}
           </div>
           <div className="flex flex-col justify-center">
             <div className="mb-4">
@@ -113,7 +103,7 @@ const CarbonBombSection = () => {
 }
 
 
-const TimeToActSection = () => {
+const TimeToActSection = ({ bombsData }) => {
   return (
     <div className="py-16">
       <div className="container mx-auto px-4">
@@ -129,12 +119,13 @@ const TimeToActSection = () => {
             </p>
           </div>
           <div className="relative">
-            <img
+            {/* <img
               src="https://uploads-ssl.webflow.com/64206379a2bd1eb2474bc869/64237250cd6ed9391d054996_WhatsApp%20Image%202023-03-28%20at%2021.39.22.jpeg"
               className="w-full h-auto px-40"
               alt=""
               loading="lazy"
-            />
+            /> */}
+            <BarChartTotalEmissions bombsData={bombsData} />
           </div>
         </div>
       </div>
@@ -326,7 +317,20 @@ const DataSection = () => {
 }
 
 
-export default function HomePage() {
+const HomePage = () => {
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('/api/data');
+      const jsonData = await res.json();
+      setData(jsonData);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
@@ -349,14 +353,14 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <SectionKPIs />
-          <CarbonBombInfo />
-          <CarbonBombSection />
-          <TimeToActSection />
-          <BanksSection />
+          {/* <SectionKPIs /> */}
+          {/* <CarbonBombInfo /> */}
+          <CarbonBombSection bombsData={data["bombs"]} />
+          <TimeToActSection bombsData={data["bombs"]} />
+          {/* <BanksSection /> */}
           {/* <OrdersOfMagnitudeSection /> */}
-          {/* <WorldMap /> */}
-          <DataSection />
+          <WorldMap bombsData={data["bombs"]} />
+          {/* <DataSection /> */}
 
           {/* ... other sections ... */}
 
@@ -372,3 +376,5 @@ export default function HomePage() {
     </Layout>
   );
 }
+
+export default HomePage;
