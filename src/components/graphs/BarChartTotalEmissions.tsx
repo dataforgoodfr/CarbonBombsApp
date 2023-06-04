@@ -72,14 +72,14 @@ const BarChartTotalEmissions = ({ bombsData }) => {
       <Legend />c
       <ReferenceLine
         y={420}
-        stroke="#cd1818"
+        stroke='#454545'
         strokeDasharray="3 3"
       >
         <Label
           value="Carbon Budget"
-          position="end"
-          offset={100}
-          style={{ fill: '#cd1818', textAnchor: 'end' }}
+          position="top"
+          offset={10}
+          style={{ fill: '#454545', textAnchor: 'start' }}
         />
       </ReferenceLine>
       {fuelTypes.map((type, index) => (

@@ -337,7 +337,7 @@ const HomePage = () => {
       <Seo />
 
       <main>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto w-4/5 px-4">
           <div className="my-20">
             <div className="text-center">
               <div className="max-w-lg mx-auto">
@@ -347,7 +347,7 @@ const HomePage = () => {
                 <p className="text-lg">CarbonBombs.org is a tool to follow the evolution of carbon bombs in the world.</p>
                 <div className="mt-4">
                   <div className="text-center">
-                    <a href="#play-with-data" className="py-2 px-4 bg-black text-white hover:bg-gray-800">Play with data</a>
+                    <a href="#data" className="py-2 px-4 bg-black text-white hover:bg-gray-800">Play with data</a>
                   </div>
                 </div>
               </div>
