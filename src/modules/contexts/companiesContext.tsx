@@ -1,33 +1,33 @@
 import { createContext, useEffect, useState } from 'react';
 
-export const DataContext = createContext();
+export const CompaniesContext = createContext();
 
-export const DataProvider = ({ children }) => {
-  const [data, setData] = useState([]);
+export const CompaniesProvider = ({ children }) => {
+  const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
-      const res = await fetch('/api/data');
+      const res = await fetch('/api/neo4j?entity=Company');
       const jsonData = await res.json();
-      setData(jsonData);
       setLoading(false);
+      setCompanies(jsonData);
     };
 
     fetchData();
   }, []);
 
   return (
-    <DataContext.Provider
+    <CompaniesContext.Provider
       value={{
-        data,
+        companies,
         loading,
       }}
     >
       {children}
-    </DataContext.Provider>
+    </CompaniesContext.Provider>
   );
 };
 
-export default DataContext;
+export default CompaniesContext;

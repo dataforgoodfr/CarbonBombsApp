@@ -12,7 +12,7 @@ import NetworkGraphSection from '@/components/network';
 import customColors from '../../../palette.js';
 
 const HomePage = () => {
-  const { data = {} } = useContext(DataContext);
+  const { data } = useContext(DataContext);
   const [bombsFiltered, setBombsFiltered] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
