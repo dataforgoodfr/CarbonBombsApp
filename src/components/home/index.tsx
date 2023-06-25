@@ -52,7 +52,7 @@ const HomePage = () => {
 
 
   return (
-    <div className='container mx-auto w-4/5 px-4'>
+    <>
       <div className='my-20'>
         <div className='text-center'>
           <div className='mx-auto max-w-lg'>
@@ -103,7 +103,7 @@ const HomePage = () => {
 
       <WorldMap bombsData={bombsFiltered} />
       {/* <DataSection /> */}
-    </div>
+    </>
   );
 };
 
