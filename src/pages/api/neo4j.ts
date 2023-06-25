@@ -2,8 +2,9 @@ import { createNeo4jSession } from '@/utils/neo4j';
 
 export default async function handler(req, res) {
   const session = createNeo4jSession();
-  const query =
-    'MATCH (n:Company) RETURN n, SIZE([(n)--() | n]) AS RelationshipCount ORDER BY RelationshipCount DESC LIMIT 25';
+  const { entity } = req.query;
+
+  const query = `MATCH (n:${entity}) RETURN n, SIZE([(n)--() | n]) AS RelationshipCount ORDER BY RelationshipCount DESC`;
   try {
     const result = await session.run(query);
     const data = result.records.map((record) => record.get('n').properties);
