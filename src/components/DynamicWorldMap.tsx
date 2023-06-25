@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, CircleMarker, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import React from 'react';
+import { CircleMarker, MapContainer, Popup,TileLayer } from 'react-leaflet';
 import 'leaflet-color-markers';
+
+import 'leaflet/dist/leaflet.css';
 
 import customColors from '../../palette.js';
 

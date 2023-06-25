@@ -1,6 +1,6 @@
 import fs from 'fs';
+import Papa from 'papaparse';
 import path from 'path';
-import Papa, { parse } from 'papaparse';
 
 export default function handler(req, res) {
   const csvFile = fs.readFileSync(path.resolve('./public/data/carbon_bombs_informations.csv'), 'utf-8');
