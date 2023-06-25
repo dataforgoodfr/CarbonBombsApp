@@ -1,12 +1,13 @@
 import * as React from 'react';
+import Link from 'next/link';
 
 const Navbar = () => {
   return (
     <nav className='sticky left-0 top-0 z-[9999] flex flex-wrap items-center justify-between bg-white bg-white p-3 px-6 shadow-xl'>
       <div className='mr-6 flex flex-shrink-0 items-center text-black'>
-        <span className='text-xl font-semibold tracking-tight'>
+        <Link href='/' className='text-xl font-semibold tracking-tight'>
           CarbonBombs.org
-        </span>
+        </Link>
       </div>
       <div className='block lg:hidden'>
         <button className='flex items-center rounded border border-black px-3 py-2 text-black hover:border-black hover:text-black'>
@@ -22,12 +23,12 @@ const Navbar = () => {
       </div>
       <div className='hidden pr-12 lg:flex lg:items-center'>
         <div className='text-sm'>
-          <a
-            href='#companies'
+          <Link
+            href='companies'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
             Companies
-          </a>
+          </Link>
           <a
             href='#map'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'

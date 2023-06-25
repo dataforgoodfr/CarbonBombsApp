@@ -4,12 +4,15 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const res = await fetch('/api/data');
       const jsonData = await res.json();
       setData(jsonData);
+      setLoading(false);
     };
 
     fetchData();
@@ -19,6 +22,7 @@ export const DataProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         data,
+        loading,
       }}
     >
       {children}
