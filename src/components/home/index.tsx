@@ -7,12 +7,15 @@ import CarbonBombSection from '@/components/home/CarbonBombSection';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
 import WorldMap from '@/components/WorldMap';
+import NetworkGraph from '@/components/network';
 
 const HomePage = () => {
   const { data = {} } = useContext(DataContext);
   const [bombsFiltered, setBombsFiltered] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
+
+  console.log(bombsFiltered);
 
   useEffect(() => {
     const filterData = () => {
@@ -115,6 +118,10 @@ const HomePage = () => {
           <p>Loading...</p>
         )}
       </>
+
+      <div>
+        <NetworkGraph />
+      </div>
     </>
   );
 };
