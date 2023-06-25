@@ -2,33 +2,48 @@ import * as React from 'react';
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-white p-3 shadow-xl px-6">
-      <div className="flex items-center flex-shrink-0 text-black mr-6">
-        <span className="font-semibold text-xl tracking-tight">CarbonBombs.org</span>
+    <nav className='sticky left-0 top-0 z-[9999] flex flex-wrap items-center justify-between bg-white bg-white p-3 px-6 shadow-xl'>
+      <div className='mr-6 flex flex-shrink-0 items-center text-black'>
+        <span className='text-xl font-semibold tracking-tight'>
+          CarbonBombs.org
+        </span>
       </div>
-      <div className="block lg:hidden">
-        <button className="flex items-center px-3 py-2 border rounded text-black border-black hover:text-black hover:border-black">
-          <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <div className='block lg:hidden'>
+        <button className='flex items-center rounded border border-black px-3 py-2 text-black hover:border-black hover:text-black'>
+          <svg
+            className='h-3 w-3 fill-current'
+            viewBox='0 0 20 20'
+            xmlns='http://www.w3.org/2000/svg'
+          >
             <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z" />
+            <path d='M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z' />
           </svg>
         </button>
       </div>
-      <div className="hidden lg:flex lg:items-center pr-12">
-        <div className="text-sm">
-          <a href="#map" className="block lg:inline-block text-black hover:text-gray-500 mr-4">
+      <div className='hidden pr-12 lg:flex lg:items-center'>
+        <div className='text-sm'>
+          <a
+            href='#map'
+            className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
+          >
             Map
           </a>
-          <a href="#data" className="block lg:inline-block text-black hover:text-gray-500 mr-4">
+          <a
+            href='#data'
+            className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
+          >
             Data
           </a>
-          <a href="#about" className="block lg:inline-block text-black hover:text-gray-500 mr-4">
+          <a
+            href='#about'
+            className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
+          >
             About
           </a>
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
