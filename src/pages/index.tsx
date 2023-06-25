@@ -9,7 +9,7 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 import BarChartTotalEmissions from '@/components/graphs/BarChartTotalEmissions';
 import BarChartBudget from '@/components/graphs/BarChartBudget';
-
+import Select from 'react-select';
 
 
 const SectionKPIs = () => {
@@ -339,6 +339,23 @@ const HomePage = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const filterData = () => {
+      if (selectedCompanies.length || selectedCountries.length) {
+        const filtered = data.filter(item =>
+          (!selectedCompanies.length || item.Parent_company_source_GEM.some(company => selectedCompanies.find(option => option.value === company.company))) &&
+          (!selectedCountries.length || selectedCountries.some(option => option.value === item.Country_source_CB))
+        );
+        setDataFiltered(filtered);
+      } else {
+        setDataFiltered(data);
+      }
+    }
+
+    filterData();
+  }, [selectedCompanies, selectedCountries]);
+
+
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
@@ -367,6 +384,22 @@ const HomePage = () => {
           <TimeToActSection bombsData={data["bombs"]} />
           {/* <BanksSection /> */}
           {/* <OrdersOfMagnitudeSection /> */}
+          <div className="flex justify-center my-5">
+            <Select
+              options={data.companies}
+              className="mx-3 w-1/2"
+              placeholder="Select a company..."
+              isMulti
+              onChange={setSelectedCompanies}
+            />
+            <Select
+              options={data.countries}
+              className="mx-3 w-1/2"
+              placeholder="Select a country..."
+              isMulti
+              onChange={setSelectedCountries}
+            />
+          </div>
           <WorldMap bombsData={data["bombs"]} />
           {/* <DataSection /> */}
 
