@@ -80,8 +80,18 @@ const HomePage = () => {
       </div>
       <SectionKPIs />
       {/* <CarbonBombInfo /> */}
-      <CarbonBombSection bombsData={data.bombs} />
-      <TimeToActSection bombsData={data.bombs} />
+
+      <>
+        {data.bombs?.length > 0 ? (
+          <>
+            <CarbonBombSection bombsData={data.bombs} />
+            <TimeToActSection bombsData={data.bombs} />
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </>
+
       {/* <BanksSection /> */}
       {/* <OrdersOfMagnitudeSection /> */}
       <div className="flex justify-center my-5 z-[9000]">
@@ -100,9 +110,17 @@ const HomePage = () => {
           onChange={setSelectedCountries}
         />
       </div>
-
-      <WorldMap bombsData={bombsFiltered} />
       {/* <DataSection /> */}
+
+      <>
+        {bombsFiltered?.length > 0 ? (
+          <>
+            <WorldMap bombsData={bombsFiltered} />
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </>
     </>
   );
 };
