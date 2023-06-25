@@ -319,13 +319,21 @@ const DataSection = () => {
 
 const HomePage = () => {
   const [data, setData] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState([]);
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+
+  // const companyOptions = unique(data.map(item => item.company)).map(company => ({ value: company, label: company }));
+  // const countryOptions = unique(data.map(item => item.country)).map(country => ({ value: country, label: country }));
 
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch('/api/data');
       const jsonData = await res.json();
+      console.log(jsonData);
       setData(jsonData);
+      setDataFiltered(jsonData);
     };
 
     fetchData();

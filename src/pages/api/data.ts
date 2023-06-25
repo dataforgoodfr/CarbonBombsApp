@@ -13,11 +13,31 @@ export default function handler(req, res) {
       'Latitude' in item &&
       'Longitude' in item
     )
-    .map(item => ({
-      ...item,
-      New_project_source_CB: item.New_project_source_CB === 'True',
-    }));
+    .map(item => {
+      const companies = item.Parent_company_source_GEM.split(';').map(companyInfo => {
+        const [company, percentage] = companyInfo.split('(');
+        const ownershipShare = parseFloat(percentage);
+        return {
+          company: company.trim(),
+          ownershipShare,
+        };
+      });
 
-  const data = { "bombs": parsedCSV }
+      return {
+        ...item,
+        Parent_company_source_GEM: companies,
+        New_project_source_CB: item.New_project_source_CB === 'True',
+      };
+    });
+
+  let companiesList = parsedCSV.flatMap(item => item.Parent_company_source_GEM);
+  let uniqueCompanies = [...new Set(companiesList.map(company => company.company))];
+
+  let countriesList = parsedCSV.map(item => item.Country_source_CB);
+  let uniqueCountries = [...new Set(countriesList)];
+
+  // Then add to your data object
+  const data = { "bombs": parsedCSV, "companies": uniqueCompanies, "countries": uniqueCountries }
+
   res.status(200).json(data);
 }
