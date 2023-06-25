@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CarbonBombSection from '@/components/home/CarbonBombSection';
 import SectionKPIs from '@/components/home/SectionKPIs';
@@ -20,7 +20,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className='container mx-auto w-4/5 px-4'>
+    <>
       <div className='my-20'>
         <div className='text-center'>
           <div className='mx-auto max-w-lg'>
@@ -54,7 +54,7 @@ const HomePage = () => {
       {/* <OrdersOfMagnitudeSection /> */}
       <WorldMap bombsData={data.bombs} />
       {/* <DataSection /> */}
-    </div>
+    </>
   );
 };
 
