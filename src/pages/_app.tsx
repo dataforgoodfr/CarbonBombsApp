@@ -1,4 +1,5 @@
 import { AppProps } from 'next/app';
+import { DataProvider } from '@/modules/contexts/dataContext';
 import '@fontsource/inter';
 import '@fontsource/poppins';
 
@@ -14,9 +15,11 @@ import Layout from '@/components/layout/Layout';
  */
 
 const App = ({ Component, pageProps }: AppProps) => (
-  <Layout>
-    <Component {...pageProps} />
-  </Layout>
+  <DataProvider>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  </DataProvider>
 );
 
 export default App;
