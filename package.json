@@ -32,6 +32,7 @@
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",
     "react-scroll": "^1.8.9",
+    "react-select": "^5.7.3",
     "recharts": "^2.6.2",
     "tailwind-merge": "^1.12.0"
   },
