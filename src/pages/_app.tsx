@@ -1,5 +1,8 @@
 import { AppProps } from 'next/app';
 import { DataProvider } from '@/modules/contexts/dataContext';
+import { BanksProvider } from '@/modules/contexts/banksContext';
+import { CompaniesProvider } from '@/modules/contexts/companiesContext';
+import { CarbonBombsProvider } from '@/modules/contexts/carbonBombsContext';
 import '@fontsource/inter';
 import '@fontsource/poppins';
 
@@ -16,9 +19,15 @@ import Layout from '@/components/layout/Layout';
 
 const App = ({ Component, pageProps }: AppProps) => (
   <DataProvider>
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <BanksProvider>
+      <CompaniesProvider>
+        <CarbonBombsProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CarbonBombsProvider>
+      </CompaniesProvider>
+    </BanksProvider>
   </DataProvider>
 );
 
