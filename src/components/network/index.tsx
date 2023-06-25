@@ -1,64 +1,85 @@
+import NetworkGraph from '@/components/network/canvas';
 import React from 'react';
-import dynamic from 'next/dynamic';
+import { useEffect, useState, useContext } from 'react';
 
-const DynamicGraphCanvas = dynamic(
-  () => import('reagraph').then((mod) => mod.GraphCanvas),
-  { ssr: false } // This will make the component only rendered on client side
-);
+import customColors from '../../../palette.js';
 
-const NetworkGraph = ({ nodes = [], edges = [] }) => {
-  // If no nodes or edges provided, use these default values
-  const defaultNodes = [
-    // CarbonBomb nodes
-    { id: 'cb-1', label: 'Carbon Bomb 1', type: 'CarbonBomb', fill: "red" },
-    { id: 'cb-2', label: 'Carbon Bomb 2', type: 'CarbonBomb', fill: "red" },
-    // Company nodes
-    { id: 'co-1', label: 'Company 1', type: 'Company' },
-    { id: 'co-2', label: 'Company 2', type: 'Company' },
-    // Bank nodes
-    { id: 'ba-1', label: 'Bank 1', type: 'Bank' },
-    { id: 'ba-2', label: 'Bank 2', type: 'Bank' },
-  ];
+const NetworkGraphSection = ({ bombs, companies, countries }) => {
+  const [networkData, setNetworkData] = useState({ nodes: [], edges: [] })
 
-  const defaultEdges = [
-    // CarbonBomb to Company edges
-    { id: 'cb-1->co-1', target: 'cb-1', source: 'co-1', label: 'CB 1 to Co 1' },
-    { id: 'cb-2->co-2', target: 'cb-2', source: 'co-2', label: 'CB 2 to Co 2' },
-    // Company to Bank edges
-    { id: 'co-1->ba-1', target: 'co-1', source: 'ba-1', label: 'Co 1 to Ba 1' },
-    { id: 'co-2->ba-1', target: 'co-2', source: 'ba-1', label: 'Co 1 to Ba 1' },
-    { id: 'co-2->ba-2', target: 'co-2', source: 'ba-2', label: 'Co 2 to Ba 2' },
-  ];
+  const generateGraphData = (carbonBombs) => {
+    let nodes = [];
+    let edges = [];
 
-  // Use provided nodes and edges if they are not empty, otherwise use default values
-  const finalNodes = nodes.length > 0 ? nodes : defaultNodes;
-  const finalEdges = edges.length > 0 ? edges : defaultEdges;
+    carbonBombs.forEach((carbonBomb, index) => {
+      // Create a node for each CarbonBomb
 
+      console.log(carbonBomb)
 
-  const getColorFromNodeType = (nodeType) => {
-    switch (nodeType) {
-      case 'CarbonBomb':
-        return 'red';
-      case 'Company':
-        return 'green';
-      case 'Bank':
-        return 'blue';
-      default:
-        return 'gray'; // Default color for unknown types
-    }
+      const sizeFactor = 5;
+      const color = carbonBomb.New_project_source_CB ? customColors.customNew : customColors.customExisting; // Change colors based on your preference
+      const radius = carbonBomb.Potential_GtCO2_source_CB * sizeFactor;
+
+      nodes.push({
+        id: `cb-${index}`,
+        name: carbonBomb.Carbon_bomb_name_source_CB,
+        label: carbonBomb.Carbon_bomb_name_source_CB,
+        type: 'CarbonBomb',
+        fill: color,
+        size: radius,
+        metadata: carbonBomb,  // Store all objects as metadata
+      });
+
+      if (carbonBomb.Parent_company_source_GEM) {
+        // For each company in Parent_company_source_GEM, create a node and an edge
+        carbonBomb.Parent_company_source_GEM.forEach((company, companyIndex) => {
+          // Check if company already exists in nodes, if not create a new one
+          if (!nodes.some(node => node.id === `co-${company.company}`)) {
+            nodes.push({
+              id: `co-${company.company}`,
+              name: company.company,
+              label: company.company,
+              type: 'Company',
+            });
+          }
+
+          // Create an edge from CarbonBomb to the Company
+          edges.push({
+            id: `co-${company.company}->cb-${index}`,
+            source: `co-${company.company}`,
+            target: `cb-${index}`,
+            ownershipShare: company.ownershipShare,
+            label: `${company.company} is financing ${carbonBomb.Carbon_bomb_name_source_CB}`,
+          });
+        });
+      }
+    });
+
+    return { nodes, edges };
   };
 
+  useEffect(() => {
+    // Check if companies and countries are empty
+
+    // if (bombs) {
+    //   const { nodes, edges } = generateGraphData(bombs);
+    //   setNetworkData({ nodes: nodes, edges: edges })
+    // }
+
+    if (companies.length === 0 && countries.length === 0) {
+      setNetworkData({ nodes: [], edges: [] })
+    } else {
+      const { nodes, edges } = generateGraphData(bombs);
+      setNetworkData({ nodes: nodes, edges: edges })
+    }
+  }, [bombs, companies, countries]);
 
 
   return (
     <div className='mt-10 w-full h-[600px] relative'>
-      <DynamicGraphCanvas
-        nodes={finalNodes}
-        edges={finalEdges}
-        clusterAttribute="type"
-      />
+      <NetworkGraph nodes={networkData.nodes} edges={networkData.edges} />
     </div>
   );
 };
 
-export default NetworkGraph;
+export default NetworkGraphSection;
