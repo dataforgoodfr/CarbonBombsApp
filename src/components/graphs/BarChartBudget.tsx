@@ -58,7 +58,7 @@ const BarChartBudget = ({ bombsData }) => {
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis dataKey='New_project_source_CB' />
         <YAxis label={{ value: 'GtCO2', angle: -90, position: 'insideLeft' }} />
-        <Tooltip />
+        <Tooltip formatter={(value) => value.toFixed(2)} />
         <Legend />
         <Bar
           dataKey='Existing projects'

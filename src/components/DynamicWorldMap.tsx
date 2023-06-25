@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircleMarker, MapContainer, Popup,TileLayer } from 'react-leaflet';
+import { CircleMarker, MapContainer, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet-color-markers';
 
 import 'leaflet/dist/leaflet.css';
@@ -14,7 +14,7 @@ const DynamicWorldMap = ({ bombsData }) => {
 
   return (
     <div className="h-screen w-full">
-      <MapContainer center={[51.505, -0.09]} zoom={2} style={{ height: "100%", width: "100%" }}>
+      <MapContainer center={[51.505, -0.09]} zoom={2} minZoom={2} style={{ height: "100%", width: "100%" }}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
