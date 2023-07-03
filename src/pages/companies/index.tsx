@@ -4,8 +4,6 @@ import Select from 'react-select';
 import WorldMap from '@/components/WorldMap';
 import BarChartBudget from '@/components/graphs/BarChartBudget';
 
-import CompaniesContext from '@/modules/contexts/companiesContext';
-
 const CompaniesIndex = () => {
   const { data } = useContext(DataContext);
   const [bombsFiltered, setBombsFiltered] = useState([]);

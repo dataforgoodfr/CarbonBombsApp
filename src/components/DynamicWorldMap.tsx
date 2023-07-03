@@ -27,7 +27,6 @@ const DynamicWorldMap = ({ bombsData, className }) => {
                 ? customColors.customNew
                 : customColors.customExisting; // Change colors based on your preference
               const radius = data.Potential_GtCO2_source_CB * sizeFactor;
-              console.log('yoo', data, color);
 
               return (
                 <CircleMarker

@@ -36,12 +36,12 @@ const Navbar = () => {
           >
             Banks involved
           </Link>
-          <Link
+          {/* <Link
             href='companies'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
             Companies involved
-          </Link>
+          </Link> */}
           {/* <a
             href='#map'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
