@@ -6,6 +6,7 @@ import DataContext from '@/modules/contexts/dataContext';
 import CarbonBombSection from '@/components/home/CarbonBombSection';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
+import CarbonBombInfo from '@/components/home/CarbonBombInfo';
 import WorldMap from '@/components/WorldMap';
 import NetworkGraphSection from '@/components/network';
 
@@ -16,8 +17,6 @@ const HomePage = () => {
   const [bombsFiltered, setBombsFiltered] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
-
-
 
 
   useEffect(() => {
@@ -52,20 +51,19 @@ const HomePage = () => {
           <div className='mx-auto max-w-lg'>
             <div className='mb-4'>
               <h1 className='text-center text-4xl font-bold'>
-                Transparent data and <br /> visualization about carbon bombs
+                Carbon Bombs under the spotlight
               </h1>
             </div>
             <p className='text-lg'>
-              CarbonBombs.org is a tool to follow the evolution of carbon bombs
-              in the world.
+              Transparent data and visualization about the biggest fossil fuel extraction projects around the world
             </p>
             <div className='mt-4'>
               <div className='text-center'>
                 <a
-                  href='#data'
+                  href='#map'
                   className='bg-black px-4 py-2 text-white hover:bg-gray-800'
                 >
-                  Play with data
+                  Check the map
                 </a>
               </div>
             </div>
@@ -75,40 +73,36 @@ const HomePage = () => {
       <SectionKPIs />
       {/* <CarbonBombInfo /> */}
 
-      <>
-        {data.bombs?.length > 0 ? (
-          <>
-            <CarbonBombSection bombsData={data.bombs} />
-            <TimeToActSection bombsData={data.bombs} />
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </>
+
 
       {/* <BanksSection /> */}
       {/* <OrdersOfMagnitudeSection /> */}
-      <div className='z-[9000] my-5 flex justify-center'>
-        <Select
-          options={data.companies?.map((company) => ({
-            value: company,
-            label: company,
-          }))}
-          className='z-[9000] mx-3 w-1/2'
-          placeholder='Select a company...'
-          isMulti
-          onChange={setSelectedCompanies}
-        />
-        <Select
-          options={data.countries?.map((country) => ({
-            value: country,
-            label: country,
-          }))}
-          className='z-[9000] mx-3 w-1/2'
-          placeholder='Select a country...'
-          isMulti
-          onChange={setSelectedCountries}
-        />
+      <div className='z-[9000] my-5'>
+        <h2 className='text-2xl font-bold mb-5' id='map'>
+          Carbon bombs and key stakeholders worldwide
+        </h2>
+        <div className="flex justify-center">
+          <Select
+            options={data.companies?.map((company) => ({
+              value: company,
+              label: company,
+            }))}
+            className='z-[9000] mx-3 w-1/2'
+            placeholder='Select a company...'
+            isMulti
+            onChange={setSelectedCompanies}
+          />
+          <Select
+            options={data.countries?.map((country) => ({
+              value: country,
+              label: country,
+            }))}
+            className='z-[9000] mx-3 w-1/2'
+            placeholder='Select a country...'
+            isMulti
+            onChange={setSelectedCountries}
+          />
+        </div>
       </div>
       {/* <DataSection /> */}
 
@@ -122,9 +116,22 @@ const HomePage = () => {
         )}
       </>
 
-      <div>
+      <>
+        {data.bombs?.length > 0 ? (
+          <>
+            <CarbonBombInfo />
+            <CarbonBombSection bombsData={data.bombs} />
+            <TimeToActSection bombsData={data.bombs} />
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </>
+
+
+      {/* <div>
         <NetworkGraphSection bombs={bombsFiltered} countries={selectedCountries} companies={selectedCompanies} />
-      </div>
+      </div> */}
     </>
   );
 };

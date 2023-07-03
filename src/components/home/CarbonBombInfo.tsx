@@ -3,21 +3,17 @@ const CarbonBombInfo = () => (
     <div className='text-center'>
       <h2 className='mb-4 text-2xl font-bold'>What is a carbon bomb?</h2>
       <p>
-        Carbon bombs are fossil fuel projects that generate massive amounts of
-        CO2 emissions and are likely to significantly threaten the 1.5°C climate
-        target.
+        A carbon bomb is a fossil fuel extraction project that will generate more than one gigatonne of CO2 equivalent (1 GtCO2eq) over its lifetime.
       </p>
       <p className='mt-2'>
-        425 carbon bombs, spread across 28 countries, are likely to individually{' '}
-        <b>generate more than one billion tons of CO2</b> over their lifetime.
+        There are currently 425 carbon bombs in the world, either already operating or in starting phase.
       </p>
       <p className='mt-2'>
-        The full operation of these 425 carbon bombs will emit twice as much CO2
-        as would be required to stay below 1.5°C of global warming.
+        These projects significantly threaten the Paris Agreement climate targets.
       </p>
-      <p className='mt-2'>
+      {/* <p className='mt-2'>
         <i>By 2020, 40% of these projects had not yet started.</i>
-      </p>
+      </p> */}
     </div>
   </section>
 );
