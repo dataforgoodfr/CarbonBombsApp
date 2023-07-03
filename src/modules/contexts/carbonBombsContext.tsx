@@ -9,7 +9,13 @@ export const CarbonBombsProvider = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
-      const res = await fetch('/api/neo4j?entity=Carbon_bombs');
+      const res = await fetch('/api/neo4j', {
+        method: 'POST',
+        body: JSON.stringify({
+          query:
+            'MATCH (n:carbon_bombs) RETURN n, SIZE([(n)--() | n]) AS RelationshipCount ORDER BY RelationshipCount DESC;',
+        }),
+      });
       const jsonData = await res.json();
       setLoading(false);
       setCarbonBombs(jsonData);

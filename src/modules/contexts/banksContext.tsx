@@ -9,7 +9,13 @@ export const BanksProvider = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
-      const res = await fetch('/api/neo4j?entity=Bank');
+      const res = await fetch('/api/neo4j', {
+        method: 'POST',
+        body: JSON.stringify({
+          query:
+            'MATCH (n:banks) RETURN n, SIZE([(n)--() | n]) AS RelationshipCount ORDER BY RelationshipCount DESC;',
+        }),
+      });
       const jsonData = await res.json();
       setLoading(false);
       setBanks(jsonData);

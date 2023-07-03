@@ -9,7 +9,13 @@ export const CompaniesProvider = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
-      const res = await fetch('/api/neo4j?entity=Company');
+      const res = await fetch('/api/neo4j', {
+        method: 'POST',
+        body: JSON.stringify({
+          query:
+            'MATCH (n:companies) RETURN n, SIZE([(n)--() | n]) AS RelationshipCount ORDER BY RelationshipCount DESC;',
+        }),
+      });
       const jsonData = await res.json();
       setLoading(false);
       setCompanies(jsonData);
