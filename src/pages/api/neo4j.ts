@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
   try {
     const result = await session.run(query);
-    const data = result.records.map((record) => record.get('n').properties);
+    const data = result.records.map((record) => record.toObject());
 
     res.status(200).json(data);
   } catch (error) {
