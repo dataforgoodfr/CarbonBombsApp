@@ -18,7 +18,6 @@ const HomePage = () => {
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
 
-
   useEffect(() => {
     const filterData = () => {
       if (selectedCompanies.length || selectedCountries.length) {
@@ -46,7 +45,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className='my-20'>
+      <div className='py-20'>
         <div className='text-center'>
           <div className='mx-auto max-w-lg'>
             <div className='mb-4'>
@@ -55,7 +54,8 @@ const HomePage = () => {
               </h1>
             </div>
             <p className='text-lg'>
-              Transparent data and visualization about the biggest fossil fuel extraction projects around the world
+              Transparent data and visualization about the biggest fossil fuel
+              extraction projects around the world
             </p>
             <div className='mt-4'>
               <div className='text-center'>
@@ -73,15 +73,13 @@ const HomePage = () => {
       <SectionKPIs />
       {/* <CarbonBombInfo /> */}
 
-
-
       {/* <BanksSection /> */}
       {/* <OrdersOfMagnitudeSection /> */}
       <div className='z-[9000] my-5'>
-        <h2 className='text-2xl font-bold mb-5' id='map'>
+        <h2 className='mb-5 text-2xl font-bold' id='map'>
           Carbon bombs and key stakeholders worldwide
         </h2>
-        <div className="flex justify-center">
+        <div className='flex justify-center'>
           <Select
             options={data.companies?.map((company) => ({
               value: company,
@@ -127,7 +125,6 @@ const HomePage = () => {
           <p>Loading...</p>
         )}
       </>
-
 
       {/* <div>
         <NetworkGraphSection bombs={bombsFiltered} countries={selectedCountries} companies={selectedCompanies} />
