@@ -17,9 +17,6 @@ const HomePage = () => {
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
 
-
-
-
   useEffect(() => {
     const filterData = () => {
       if (selectedCompanies.length || selectedCountries.length) {
@@ -47,7 +44,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className='my-20'>
+      <div className='py-20'>
         <div className='text-center'>
           <div className='mx-auto max-w-lg'>
             <div className='mb-4'>
@@ -123,7 +120,11 @@ const HomePage = () => {
       </>
 
       <div>
-        <NetworkGraphSection bombs={bombsFiltered} countries={selectedCountries} companies={selectedCompanies} />
+        <NetworkGraphSection
+          bombs={bombsFiltered}
+          countries={selectedCountries}
+          companies={selectedCompanies}
+        />
       </div>
     </>
   );

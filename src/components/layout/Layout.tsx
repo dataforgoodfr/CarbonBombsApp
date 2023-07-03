@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Navbar />
       <Seo />
-      <main>
+      <main className='bg-gray-100'>
         <div className='container mx-auto w-4/5 px-4'>
           {children}
           <footer className='mt-10 border-t py-10 text-center'>

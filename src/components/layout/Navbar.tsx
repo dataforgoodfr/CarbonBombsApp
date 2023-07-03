@@ -4,11 +4,18 @@ import Link from 'next/link';
 const Navbar = () => {
   return (
     <nav className='sticky left-0 top-0 z-[9999] flex flex-wrap items-center justify-between bg-white bg-white p-3 px-6 shadow-xl'>
-      <div className='mr-6 flex flex-shrink-0 items-center text-black'>
+      <div className='mr-6 flex flex-shrink-0 items-center justify-center text-black'>
         <Link href='/' className='text-xl font-semibold tracking-tight'>
           CarbonBombs.org
         </Link>
+        <Link
+          href='/'
+          className='ml-4 block text-black hover:text-gray-500 lg:inline-block'
+        >
+          Home
+        </Link>
       </div>
+
       <div className='block lg:hidden'>
         <button className='flex items-center rounded border border-black px-3 py-2 text-black hover:border-black hover:text-black'>
           <svg
@@ -22,20 +29,20 @@ const Navbar = () => {
         </button>
       </div>
       <div className='hidden pr-12 lg:flex lg:items-center'>
-        <div className='text-sm'>
+        <div>
           <Link
             href='banks'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
-            Banks
+            Banks involved
           </Link>
           <Link
             href='companies'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
-            Companies
+            Companies involved
           </Link>
-          <a
+          {/* <a
             href='#map'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
@@ -52,7 +59,7 @@ const Navbar = () => {
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
             About
-          </a>
+          </a> */}
         </div>
       </div>
     </nav>
