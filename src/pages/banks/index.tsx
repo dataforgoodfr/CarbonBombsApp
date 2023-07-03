@@ -55,7 +55,7 @@ const BanksIndex = () => {
             //   label: company,
             // }))}
             defaultValue={{ value: 'ICBC', label: 'ICBC' }}
-            options={banksName}
+            options={namesLoading ? [] : banksName}
             placeholder='Select a bank...'
             onChange={(item) => setName(item.value)}
           />
