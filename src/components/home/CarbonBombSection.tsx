@@ -16,8 +16,7 @@ const CarbonBombSection = ({ bombsData }) => (
         <div className='flex flex-col justify-center'>
           <div className='mb-4'>
             <h2 className='text-2xl font-bold' id='carbon-budget'>
-              425 carbon bombs over the globe are threatening our 1.5°C carbon
-              budget
+              Carbon bombs are threatening living conditions on Earth
             </h2>
           </div>
           <p className='text-lg'>
@@ -26,9 +25,7 @@ const CarbonBombSection = ({ bombsData }) => (
             420 to 580 gigatonnes of CO2.
             <br />
             <br />
-            Yet, the cumulated emissions of the 425 carbon bombs amount to over
-            1180 gigatonnes of CO2, which would exceed the global 1.5°C carbon
-            budget by a factor of two.
+            The cumulated emissions of all 425 carbon bombs amount to over 1180 gigatonnes of CO2: this is <b>twice the carbon budget remaining to avoid irreversible consequences from climate breakdown</b>.
           </p>
         </div>
       </div>

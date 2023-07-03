@@ -11,13 +11,11 @@ const TimeToActSection = ({ bombsData }) => (
             </h2>
           </div>
           <p className='text-lg'>
-            40% of the 425 carbon bombs had not started extraction in 2020.
-            Those 169 projects amount to one third of the carbon bombs’
-            cumulated emissions. It is still time to act in order to cancel
-            them. There is also a way to limit the cumulated emissions of the
-            256 existing carbon bombs: stopping any further investments they
-            could receive, in order to put them into a pathway of natural
-            decline of their oil, gas, and coal outputs.
+            Fatih Birol, executive director of the International Energy Agency (IEA): “If governments are serious about the climate crisis, there can be no new investments in oil, gas and coal, from now – from this year (2021)”
+            <ul className="list-disc list-outside mt-5">
+              <li>Cancel all carbon bombs which had not started extraction in 2020 (169 out of 425). Those projects amount to 40% of all carbon bombs and one-third of the carbon bombs’ cumulated emissions.</li>
+              <li>Gradually phase out the 60% of projects that are currently operating to meet the Paris Agreement Climate objectives.</li>
+            </ul>
           </p>
         </div>
         <div className='relative'>
