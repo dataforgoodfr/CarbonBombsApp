@@ -63,7 +63,6 @@ const OrdersOfMagnitudeSection = () => (
                   <div
                     aria-hidden='true'
                     className='div-block-2'
-                    aria-hidden='true'
                   >
                     <img
                       src='https://uploads-ssl.webflow.com/64206379a2bd1eb2474bc869/6452167059d1f81bcf660ca2_bomb%20(1).png'

@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { useEffect, useState, useContext } from 'react';
+import { useContext,useEffect, useState } from 'react';
 import Select from 'react-select';
 
-import DataContext from '@/modules/contexts/dataContext';
+import CarbonBombInfo from '@/components/home/CarbonBombInfo';
 import CarbonBombSection from '@/components/home/CarbonBombSection';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
-import CarbonBombInfo from '@/components/home/CarbonBombInfo';
 import WorldMap from '@/components/WorldMap';
-import NetworkGraphSection from '@/components/network';
 
-import customColors from '../../../palette.js';
+import DataContext from '@/modules/contexts/dataContext';
+
 
 const HomePage = () => {
   const { data } = useContext(DataContext);

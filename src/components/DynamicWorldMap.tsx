@@ -23,7 +23,6 @@ const DynamicWorldMap = ({ bombsData }) => {
 
           const color = data.New_project_source_CB ? customColors.customNew : customColors.customExisting; // Change colors based on your preference
           const radius = data.Potential_GtCO2_source_CB * sizeFactor;
-          console.log("yoo", data, color);
 
           return (
             <CircleMarker
@@ -39,7 +38,6 @@ const DynamicWorldMap = ({ bombsData }) => {
                   <b>Country:</b> {data.Country_source_CB}<br />
                   <b>Color:</b> {color}<br />
                   <b>New:</b> {data.New_project_source_CB ? "New" : "Old"}<br />
-                  // Continue with other data fields
                 </span>
               </Popup>
             </CircleMarker>

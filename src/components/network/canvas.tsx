@@ -1,8 +1,6 @@
-import React from 'react';
 import dynamic from 'next/dynamic';
-import { useRef, forwardRef } from 'react';
-
-import { GraphCanvasRef, useSelection } from 'reagraph';
+import React from 'react';
+import { forwardRef } from 'react';
 
 
 const GraphCanvasWithNoSSR = dynamic(
