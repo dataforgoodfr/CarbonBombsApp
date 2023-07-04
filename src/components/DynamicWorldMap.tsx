@@ -6,7 +6,23 @@ import 'leaflet/dist/leaflet.css';
 
 import customColors from '../../palette.js';
 
-const DynamicWorldMap = ({ bombsData, className }) => {
+interface BombData {
+  New_project_source_CB: boolean;
+  Potential_GtCO2_source_CB: number;
+  Latitude: number;
+  Longitude: number;
+  Carbon_bomb_name_source_CB: string;
+  Country_source_CB: string;
+}
+
+interface DynamicWorldMapProps {
+  bombsData: BombData[];
+  className?: string;  // optional as it seems to be in your code
+}
+
+
+
+const DynamicWorldMap: React.FC<DynamicWorldMapProps> = ({ bombsData, className }) => {
   const sizeFactor = 1.5;
 
   return (

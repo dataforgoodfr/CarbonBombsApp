@@ -1,9 +1,24 @@
 import { createContext, useEffect, useState } from 'react';
 
-export const DataContext = createContext();
+
+type ContextType = {
+  data: {
+    bombs: any[];  // replace any[] with your actual data type
+    companies: string[];
+    countries: string[];
+  };
+  loading: boolean;
+};
+
+
+// export const DataContext = createContext<any[]>([]);
+// export const DataContext = createContext([]);
+export const DataContext = createContext<ContextType>({ data: { bombs: [], companies: [], countries: [] }, loading: false });
+// export const DataContext = createContext<ContextType>({ data: [], loading: false });
 
 export const DataProvider = ({ children }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ bombs: [], companies: [], countries: [] });
+  // const [data, setData] = useState<any[]>([]);  // Replace any[] with the type of data you have
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

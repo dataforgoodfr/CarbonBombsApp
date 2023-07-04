@@ -90,7 +90,7 @@ const BarChartTotalEmissions = ({ bombsData }) => {
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis dataKey='New_project_source_CB' />
         <YAxis label={{ value: 'GtCO2', angle: -90, position: 'insideLeft' }} />
-        <Tooltip formatter={(value) => value.toFixed(2)} />
+        <Tooltip formatter={(value) => typeof value === 'number' ? value.toFixed(2) : value} />
         <Legend />c
         <ReferenceLine y={420} stroke='#454545' strokeDasharray='3 3'>
           <Label
@@ -100,8 +100,8 @@ const BarChartTotalEmissions = ({ bombsData }) => {
             style={{ fill: '#454545', textAnchor: 'start' }}
           />
         </ReferenceLine>
-        {fuelTypes.map((type, index) => (
-          <Bar key={index} dataKey={type} stackId='a' fill={colors[type]} />
+        {fuelTypes.map((fuelType, index) => (
+          <Bar key={index} dataKey={fuelType as string} stackId='a' fill={colors[fuelType as string]} />
         ))}
       </BarChart>
     </ResponsiveContainer>

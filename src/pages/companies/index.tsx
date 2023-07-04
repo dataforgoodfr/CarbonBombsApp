@@ -1,11 +1,14 @@
-import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
-import DataContext from '@/modules/contexts/dataContext';
 import Select from 'react-select';
-import WorldMap from '@/components/WorldMap';
+
 import BarChartBudget from '@/components/graphs/BarChartBudget';
+import WorldMap from '@/components/WorldMap';
+
+import DataContext from '@/modules/contexts/dataContext';
 
 const CompaniesIndex = () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const { data } = useContext(DataContext);
   const [bombsFiltered, setBombsFiltered] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);

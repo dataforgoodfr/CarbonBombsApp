@@ -8,9 +8,6 @@ import '@/styles/colors.css';
 
 import Layout from '@/components/layout/Layout';
 
-import { BanksProvider } from '@/modules/contexts/banksContext';
-import { CarbonBombsProvider } from '@/modules/contexts/carbonBombsContext';
-import { CompaniesProvider } from '@/modules/contexts/companiesContext';
 import { DataProvider } from '@/modules/contexts/dataContext';
 
 /**

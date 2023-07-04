@@ -12,7 +12,7 @@ const GraphCanvasWithNoSSR = dynamic(
 );
 
 const DynamicGraphCanvas = forwardRef((props, ref) => {
-  return <GraphCanvasWithNoSSR ref={ref as any} {...props} />
+  return <GraphCanvasWithNoSSR ref={ref as any} {...props as any} />
 });
 
 
@@ -48,8 +48,7 @@ const NetworkGraph = ({ nodes = [], edges = [] }) => {
 
   return (
     <DynamicGraphCanvas
-      nodes={finalNodes}
-      edges={finalEdges}
+      {...{ nodes: finalNodes, edges: finalEdges } as any}
     />
   );
 
