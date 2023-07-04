@@ -20,15 +20,9 @@ import { DataProvider } from '@/modules/contexts/dataContext';
 
 const App = ({ Component, pageProps }: AppProps) => (
   <DataProvider>
-    <BanksProvider>
-      <CompaniesProvider>
-        <CarbonBombsProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </CarbonBombsProvider>
-      </CompaniesProvider>
-    </BanksProvider>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   </DataProvider>
 );
 

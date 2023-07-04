@@ -1,7 +1,13 @@
 import Link from 'next/link';
-import React, { useContext } from 'react';
-
 import BanksContext from '@/modules/contexts/banksContext';
+import React, { useContext, useEffect, useState } from 'react';
+import DataContext from '@/modules/contexts/dataContext';
+import Select from 'react-select';
+import WorldMap from '@/components/WorldMap';
+import BarChartBankFinancing from '@/components/graphs/BarChartBankFinancing';
+import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
+import { bankDetailsQuery, banksNameQuery } from '@/utils/neo4j';
+
 
 const groupByFirstLetter = (banks) => {
   return banks.reduce((result, bank) => {
@@ -15,34 +21,108 @@ const groupByFirstLetter = (banks) => {
 };
 
 const BanksIndex = () => {
-  const { banks, loading } = useContext(BanksContext);
-  const banksGroupedByLetter = groupByFirstLetter(banks);
+  // const { data } = useContext(DataContext);
+  const [name, setName] = useState('ICBC');
+  // const [bombsFiltered, setBombsFiltered] = useState([]);
+  // const [selectedCompanies, setSelectedCompanies] = useState([]);
 
-  if (loading) return <div className='py-12'>Loading...</div>;
+  // useEffect(() => {
+  //   const filterData = () => {
+  //     if (selectedCompanies.length) {
+  //       const filtered = data.bombs.filter(
+  //         (item) =>
+  //           !selectedCompanies.length ||
+  //           item.Parent_company_source_GEM.some((company) =>
+  //             selectedCompanies.find(
+  //               (option) => option.value === company.company
+  //             )
+  //           )
+  //       );
+  //       setBombsFiltered(filtered);
+  //     } else {
+  //       setBombsFiltered(data.bombs);
+  //     }
+  //   };
+
+  //   filterData();
+  // }, [data, selectedCompanies]);
+
+  // const { banks, loading } = useContext(BanksContext);
+  // const banksGroupedByLetter = groupByFirstLetter(banks);
+
+  // if (loading) return <div className='py-12'>Loading...</div>;
+
+  const { data: banks = [], loading: detailsLoading } = useNeo4jClient(
+    bankDetailsQuery(name)
+  );
+  const { data: banksName = [], loading: namesLoading } =
+    useNeo4jClient(banksNameQuery);
 
   return (
-    <div className='pt-12'>
-      <h2 className='mb-6 text-2xl font-bold text-black'>
-        {`Browse carbon bombs projects among ${banks?.length} banks`}
-      </h2>
-      <div className='container mx-auto px-4 pt-4'>
-        {Object.keys(banksGroupedByLetter)
-          .sort()
-          .map((letter) => (
-            <div key={letter}>
-              <div className='text-2xl font-bold'>{letter}</div>
-              <hr className='mb-2' />
-              {banksGroupedByLetter[letter].map((bank, index) => (
-                <Link
-                  key={index}
-                  href={`/banks/${encodeURIComponent(bank.Name)}`}
-                  className='mb-1 block cursor-pointer hover:text-blue-500'
-                >
-                  {bank.Name}
-                </Link>
-              ))}
+    <div>
+      <div className='flex justify-end py-10'>
+        <div className='mx-3 w-1/2'>
+          <div className='mb-2'>Search for a bank</div>
+          <Select
+            // options={data.companies?.map((company) => ({
+            //   value: company,
+            //   label: company,
+            // }))}
+            defaultValue={{ value: 'ICBC', label: 'ICBC' }}
+            options={namesLoading ? [] : banksName}
+            placeholder='Select a bank...'
+            onChange={(item) => setName(item.value)}
+          />
+        </div>
+      </div>
+      <div className='mb-12 flex gap-x-8 gap-y-4'>
+        <div className='h-72 w-3/5 min-w-[25rem] rounded-xl bg-white p-10 shadow'>
+          <div className='mb-8 text-3xl font-bold'>{banks[0]?.name}</div>
+          <div className='mb-3 flex gap-x-4'>
+            <div className='w-40 text-gray-500'>Headquarters</div>
+            <div className='max-w-[50%] whitespace-pre-wrap font-bold'>
+              {`${banks[0]?.address}, ${banks[0]?.country}`}
             </div>
-          ))}
+          </div>
+          <div className='flex gap-x-4'>
+            <div className='w-40 text-gray-500'>CEO Name</div>
+            <div className='font-bold'>{banks[0]?.ceo_name}</div>
+          </div>
+        </div>
+        <div className='flex h-72 w-2/5 flex-col gap-y-4'>
+          <div className='flex h-1/2 gap-x-4'>
+            <div className='flex w-1/2 min-w-[10rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
+              <div>Financing to fossil fuel producers</div>
+              <div className='text-3xl font-bold'>{`${(
+                banks[0]?.totalFossilFinancing /
+                10 ** 9
+              ).toFixed(1)} Md$`}</div>
+            </div>
+            <div className='flex w-1/2 min-w-[10rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
+              <div>Number of fussil fuel producers financed</div>
+              <div className='text-3xl font-bold'>
+                {banks[0]?.FF_companies_financed?.low}
+              </div>
+            </div>
+          </div>
+          <div className='flex h-1/2 min-w-[21rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
+            <div>{"Fossil Fuel financing trends ('22 vs prev 6y)"}</div>
+            <div className='text-3xl font-bold'>{`${(
+              banks[0]?.var22VsPrev6y * 100
+            ).toFixed(1)}%`}</div>
+          </div>
+        </div>
+      </div>
+      <div className='flex gap-x-8 gap-y-4'>
+        {/* <div className='h-[34rem] w-3/5 min-w-[25rem] rounded-xl bg-white shadow'>
+          <WorldMap bombsData={bombsFiltered} className='h-full w-full' />
+        </div> */}
+        <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
+          <div className='text-xl'>
+            Total financing to fossil fuel producers by year
+          </div>
+          <BarChartBankFinancing bank={banks[0]} />
+        </div>
       </div>
     </div>
   );
