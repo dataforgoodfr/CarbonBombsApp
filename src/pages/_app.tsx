@@ -1,5 +1,4 @@
 import { AppProps } from 'next/app';
-import { DataProvider } from '@/modules/contexts/dataContext';
 import '@fontsource/inter';
 import '@fontsource/poppins';
 
@@ -8,6 +7,8 @@ import '@/styles/globals.css';
 import '@/styles/colors.css';
 
 import Layout from '@/components/layout/Layout';
+
+import { DataProvider } from '@/modules/contexts/dataContext';
 
 /**
  * !STARTERCONF info

@@ -1,6 +1,7 @@
-import NetworkGraph from '@/components/network/canvas';
 import React from 'react';
-import { useEffect, useState, useContext } from 'react';
+import {useEffect, useState } from 'react';
+
+import NetworkGraph from '@/components/network/canvas';
 
 import customColors from '../../../palette.js';
 
@@ -8,8 +9,8 @@ const NetworkGraphSection = ({ bombs, companies, countries }) => {
   const [networkData, setNetworkData] = useState({ nodes: [], edges: [] });
 
   const generateGraphData = (carbonBombs) => {
-    let nodes = [];
-    let edges = [];
+    const nodes = [];
+    const edges = [];
 
     carbonBombs.forEach((carbonBomb, index) => {
       // Create a node for each CarbonBomb
