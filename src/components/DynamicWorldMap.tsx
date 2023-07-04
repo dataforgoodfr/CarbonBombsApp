@@ -39,6 +39,13 @@ const DynamicWorldMap: React.FC<DynamicWorldMapProps> = ({ bombsData, className 
         />
         {bombsData.length > 0
           ? bombsData.map((data, index) => {
+
+            // Check if Latitude or Longitude are undefined
+            if (!(data.Latitude && 'Latitude' in data) || !(data.Longitude && 'Longitude' in data)) {
+              console.error('Invalid coordinates for bombData:', data);
+              return null; // Don't render a CircleMarker for this bombData
+            }
+
             const color = data.New_project_source_CB
               ? customColors.customNew
               : customColors.customExisting; // Change colors based on your preference

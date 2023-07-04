@@ -29,6 +29,7 @@ export default function handler(req, res) {
   // let parsedCSV = Papa.parse(csvFile, { header: true, dynamicTyping: true }).data;
   const parsedCSV: ParsedItem[] = Papa.parse(csvFile, { header: true, dynamicTyping: true }).data as ParsedItem[];
 
+
   const parsedCSVModified = parsedCSV
     .filter(item =>
       item.Latitude !== null &&
@@ -64,7 +65,7 @@ export default function handler(req, res) {
   const uniqueCountries = Array.from(new Set(countriesList));
 
   // Then add to your data object
-  const data = { "bombs": parsedCSV, "companies": uniqueCompanies, "countries": uniqueCountries }
+  const data = { "bombs": parsedCSVModified, "companies": uniqueCompanies, "countries": uniqueCountries }
 
   res.status(200).json(data);
 }
