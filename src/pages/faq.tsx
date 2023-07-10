@@ -117,7 +117,6 @@ const FAQ_ITEMS = [
 const Faq = () => {
   const [unfoldedQuestionsIndices, setUnfoldedQuestionsIndices] = useState([]);
 
-  console.log(unfoldedQuestionsIndices);
   return (
     <div className='pt-10'>
       <div className='mb-10 text-4xl font-bold text-center'>More questions?</div>

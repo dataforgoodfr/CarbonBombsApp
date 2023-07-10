@@ -6,7 +6,6 @@ import BarChartBankFinancing from '@/components/graphs/BarChartBankFinancing';
 import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
 import { bankDetailsQuery, banksNameQuery } from '@/utils/neo4j';
 
-
 const groupByFirstLetter = (banks) => {
   return banks.reduce((result, bank) => {
     const letter = bank.Name[0].toUpperCase();
@@ -75,7 +74,12 @@ const BanksIndex = () => {
       </div>
       <div className='mb-12 flex gap-x-8 gap-y-4'>
         <div className='h-72 w-3/5 min-w-[25rem] rounded-xl bg-white p-10 shadow'>
-          <div className='mb-8 text-3xl font-bold'>{banks[0]?.name}</div>
+          <div className='mb-8 flex items-center gap-x-4'>
+            <div className='text-3xl font-bold'>{banks[0]?.name}</div>
+            <div className='max-w-[12rem]'>
+              <img src={banks[0]?.url_logo} />
+            </div>
+          </div>
           <div className='mb-3 flex gap-x-4'>
             <div className='w-40 text-gray-500'>Headquarters</div>
             <div className='max-w-[50%] whitespace-pre-wrap font-bold'>
