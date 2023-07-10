@@ -31,6 +31,12 @@ const Navbar = () => {
       <div className='hidden pr-12 lg:flex lg:items-center'>
         <div>
           <Link
+            href='faq'
+            className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
+          >
+            FAQ
+          </Link>
+          <Link
             href='banks'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
