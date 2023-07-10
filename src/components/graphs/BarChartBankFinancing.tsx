@@ -2,7 +2,6 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -27,7 +26,8 @@ const BarChartBankFinancing = ({ bank }) => {
   }
 
   const data = prepareData(bank);
-  const maxValue = Math.max(...data.map((item) => item.value));
+  const maxValue = Math.max(...data.map((item) => parseFloat(item.value)).filter((value) => !isNaN(value)));
+  // const maxValue = Math.max(...data.map((item) => item.value));
 
   return (
     <ResponsiveContainer width='100%' height={400}>

@@ -10,7 +10,13 @@ const DynamicWorldMap = dynamic(
   }
 );
 
-const WorldMap = ({ bombsData, className }) => {
+// Define a type for the props
+type WorldMapProps = {
+  bombsData: any;
+  className?: string; // Make className an optional prop
+};
+
+const WorldMap: React.FC<WorldMapProps> = ({ bombsData, className }) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

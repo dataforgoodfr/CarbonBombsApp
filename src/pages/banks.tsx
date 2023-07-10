@@ -1,10 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import DataContext from '@/modules/contexts/dataContext';
+import React, { useState } from 'react';
 import Select from 'react-select';
-import WorldMap from '@/components/WorldMap';
+
 import BarChartBankFinancing from '@/components/graphs/BarChartBankFinancing';
+
 import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
 import { bankDetailsQuery, banksNameQuery } from '@/utils/neo4j';
+
+
+const groupByFirstLetter = (banks) => {
+  return banks.reduce((result, bank) => {
+    const letter = bank.Name[0].toUpperCase();
+    if (!result[letter]) {
+      result[letter] = [];
+    }
+    result[letter].push(bank);
+    return result;
+  }, {});
+};
 
 const BanksIndex = () => {
   // const { data } = useContext(DataContext);
@@ -92,7 +104,7 @@ const BanksIndex = () => {
             </div>
           </div>
           <div className='flex h-1/2 min-w-[21rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
-            <div>{"Fossil Fuel financing trends ('22 vs prev 6y)"}</div>
+            <div>Fossil Fuel financing trends ('22 vs prev 6y)</div>
             <div className='text-3xl font-bold'>{`${(
               banks[0]?.var22VsPrev6y * 100
             ).toFixed(1)}%`}</div>

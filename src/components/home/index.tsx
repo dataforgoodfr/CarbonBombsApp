@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 
-import DataContext from '@/modules/contexts/dataContext';
+import CarbonBombInfo from '@/components/home/CarbonBombInfo';
 import CarbonBombSection from '@/components/home/CarbonBombSection';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
-import CarbonBombInfo from '@/components/home/CarbonBombInfo';
 import WorldMap from '@/components/WorldMap';
-import NetworkGraphSection from '@/components/network';
 
-import customColors from '../../../palette.js';
+import DataContext from '@/modules/contexts/dataContext';
+
 
 const HomePage = () => {
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const { data } = useContext(DataContext);
   const [bombsFiltered, setBombsFiltered] = useState([]);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
@@ -88,7 +90,7 @@ const HomePage = () => {
             className='z-[9000] mx-3 w-1/2'
             placeholder='Select a company...'
             isMulti
-            onChange={setSelectedCompanies}
+            onChange={(newValue) => setSelectedCompanies(newValue as any)}
           />
           <Select
             options={data.countries?.map((country) => ({
@@ -98,7 +100,7 @@ const HomePage = () => {
             className='z-[9000] mx-3 w-1/2'
             placeholder='Select a country...'
             isMulti
-            onChange={setSelectedCountries}
+            onChange={(newValue) => setSelectedCountries(newValue as any)}
           />
         </div>
       </div>
