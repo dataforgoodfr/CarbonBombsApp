@@ -119,8 +119,8 @@ const Faq = () => {
 
   console.log(unfoldedQuestionsIndices);
   return (
-    <div className='p-4'>
-      <h1 className='mb-10'>More questions?</h1>
+    <div className='pt-10'>
+      <div className='mb-10 text-4xl font-bold text-center'>More questions?</div>
       <div className='px-56'>
         {...FAQ_ITEMS.map((item, index) => {
           const showAnswer = unfoldedQuestionsIndices.includes(index);

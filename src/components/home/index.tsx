@@ -4,15 +4,14 @@ import Select from 'react-select';
 
 import CarbonBombInfo from '@/components/home/CarbonBombInfo';
 import CarbonBombSection from '@/components/home/CarbonBombSection';
+import CarbonBombSchema from '@/components/home/CarbonBombSchema';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
 import WorldMap from '@/components/WorldMap';
 
 import DataContext from '@/modules/contexts/dataContext';
 
-
 const HomePage = () => {
-
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { data } = useContext(DataContext);
@@ -73,7 +72,6 @@ const HomePage = () => {
         </div>
       </div>
       <SectionKPIs />
-      {/* <CarbonBombInfo /> */}
 
       {/* <BanksSection /> */}
       {/* <OrdersOfMagnitudeSection /> */}
@@ -120,6 +118,7 @@ const HomePage = () => {
         {data.bombs?.length > 0 ? (
           <>
             <CarbonBombInfo />
+            <CarbonBombSchema />
             <CarbonBombSection bombsData={data.bombs} />
             <TimeToActSection bombsData={data.bombs} />
           </>

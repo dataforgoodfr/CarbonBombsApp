@@ -42,15 +42,19 @@ const Navbar = () => {
           >
             Banks involved
           </Link>
-          <a href='/data/carbon_bombs_informations.csv' download>
-            Download Data
-          </a>
-          {/* <Link
+          <Link
             href='companies'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
             Companies involved
-          </Link> */}
+          </Link>
+          <a
+            className='mr-4'
+            href='/data/carbon_bombs_informations.csv'
+            download
+          >
+            Download Data
+          </a>
           {/* <a
             href='#map'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
