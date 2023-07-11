@@ -49,7 +49,7 @@ const BanksIndex = () => {
 
   // if (loading) return <div className='py-12'>Loading...</div>;
 
-  const { data: banks = [], loading: detailsLoading } = useNeo4jClient(
+  const { data: bank = {}, loading: detailsLoading } = useNeo4jClient(
     bankDetailsQuery(name)
   );
   const { data: banksName = [], loading: namesLoading } =
@@ -75,20 +75,20 @@ const BanksIndex = () => {
       <div className='mb-12 flex gap-x-8 gap-y-4'>
         <div className='h-72 w-3/5 min-w-[25rem] rounded-xl bg-white p-10 shadow'>
           <div className='mb-8 flex items-center gap-x-4'>
-            <div className='text-3xl font-bold'>{banks[0]?.name}</div>
+            <div className='text-3xl font-bold'>{bank?.name}</div>
             <div className='max-w-[12rem]'>
-              <img src={banks[0]?.url_logo} />
+              <img src={bank?.url_logo} />
             </div>
           </div>
           <div className='mb-3 flex gap-x-4'>
             <div className='w-40 text-gray-500'>Headquarters</div>
             <div className='max-w-[50%] whitespace-pre-wrap font-bold'>
-              {`${banks[0]?.address}, ${banks[0]?.country}`}
+              {`${bank?.address}, ${bank?.country}`}
             </div>
           </div>
           <div className='flex gap-x-4'>
             <div className='w-40 text-gray-500'>CEO Name</div>
-            <div className='font-bold'>{banks[0]?.ceo_name}</div>
+            <div className='font-bold'>{bank?.ceo_name}</div>
           </div>
         </div>
         <div className='flex h-72 w-2/5 flex-col gap-y-4'>
@@ -96,21 +96,21 @@ const BanksIndex = () => {
             <div className='flex w-1/2 min-w-[10rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
               <div>Financing to fossil fuel producers</div>
               <div className='text-3xl font-bold'>{`${(
-                banks[0]?.totalFossilFinancing /
+                bank?.totalFossilFinancing /
                 10 ** 9
               ).toFixed(1)} Md$`}</div>
             </div>
             <div className='flex w-1/2 min-w-[10rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
               <div>Number of fussil fuel producers financed</div>
               <div className='text-3xl font-bold'>
-                {banks[0]?.FF_companies_financed?.low}
+                {bank?.FF_companies_financed?.low}
               </div>
             </div>
           </div>
           <div className='flex h-1/2 min-w-[21rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
             <div>Fossil Fuel financing trends ('22 vs prev 6y)</div>
             <div className='text-3xl font-bold'>{`${(
-              banks[0]?.var22VsPrev6y * 100
+              bank?.var22VsPrev6y * 100
             ).toFixed(1)}%`}</div>
           </div>
         </div>
@@ -123,7 +123,7 @@ const BanksIndex = () => {
           <div className='text-xl'>
             Total financing to fossil fuel producers by year
           </div>
-          <BarChartBankFinancing bank={banks[0]} />
+          <BarChartBankFinancing bank={bank} />
         </div>
       </div>
     </div>
