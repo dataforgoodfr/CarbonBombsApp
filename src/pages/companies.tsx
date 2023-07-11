@@ -65,7 +65,7 @@ const CompaniesIndex = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   // const { data } = useContext(DataContext);
-  const [name, setName] = useState('Saudi Aramco');
+  const [name, setName] = useState('TotalEnergies SE');
   // const [bombsFiltered, setBombsFiltered] = useState([]);
   // const [selectedCompanies, setSelectedCompanies] = useState([]);
 
@@ -106,7 +106,6 @@ const CompaniesIndex = () => {
 
   console.log(mapQuery);
   const { data: dataFiltered, loading: mapLoading } = useNeo4jClient(mapQuery);
-
 
   return (
     <div>
@@ -185,16 +184,16 @@ const CompaniesIndex = () => {
               <div className='text-3xl font-bold'>
                 {companyFinancing
                   ? `${(
-                    companyFinancing?.last5yFossilFinancing /
-                    10 ** 9
-                  ).toFixed(1)} Mds$`
+                      companyFinancing?.last5yFossilFinancing /
+                      10 ** 9
+                    ).toFixed(1)} Mds$`
                   : 'unknown'}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className='flex h-[34rem] p-2 w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
+      <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white p-2 shadow'>
         {/* <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'> */}
         {dataFiltered.bombs?.length > 0 ? (
           <>
