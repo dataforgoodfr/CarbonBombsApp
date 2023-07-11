@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 
 import BarChartCompanyFinancing from '@/components/graphs/BarChartCompanyFinancing';
-
 import BarChartBudget from '@/components/graphs/BarChartBudget';
 import WorldMap from '@/components/WorldMap';
 import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
@@ -40,6 +39,17 @@ const CompaniesIndex = () => {
   // const { companies, loading } = useContext(ComapniesContext);
 
   // if (loading) return <div className='py-12'>Loading...</div>;
+
+  // filter only by company
+  let mapQuery = `
+  MATCH (p:carbon_bomb)-[:OPERATES]-(c:company {name:"${name}"})
+  WITH collect(properties(p)) as bombs
+  RETURN bombs
+    `;
+
+  console.log(mapQuery);
+  const { data: dataFiltered, loading: mapLoading } = useNeo4jClient(mapQuery);
+
 
   return (
     <div>
@@ -118,15 +128,26 @@ const CompaniesIndex = () => {
               <div className='text-3xl font-bold'>
                 {companyFinancing[0]
                   ? `${(
-                      companyFinancing[0]?.last5yFossilFinancing /
-                      10 ** 9
-                    ).toFixed(1)} Mds$`
+                    companyFinancing[0]?.last5yFossilFinancing /
+                    10 ** 9
+                  ).toFixed(1)} Mds$`
                   : 'unknown'}
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div className='flex h-[34rem] p-2 w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
+        {/* <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'> */}
+        {dataFiltered.bombs?.length > 0 ? (
+          <>
+            <WorldMap bombsData={dataFiltered.bombs} />
+          </>
+        ) : (
+          <p>Loading Map...</p>
+        )}
+      </div>
+
       {companyFinancing[0] && (
         <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
           <div className='text-xl'>
