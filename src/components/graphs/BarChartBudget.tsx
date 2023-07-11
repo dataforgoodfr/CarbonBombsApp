@@ -13,10 +13,10 @@ import customColors from '../../../palette.js';
 
 const prepareData = (data) => {
   const totalEmissions = data.reduce((acc, item) => {
-    const type = item.New_project_source_CB
+    const type = item.new_project
       ? 'New projects'
       : 'Existing projects';
-    acc[type] = (acc[type] || 0) + parseFloat(item.Potential_GtCO2_source_CB);
+    acc[type] = (acc[type] || 0) + parseFloat(item.potential_gtco2);
     return acc;
   }, {});
 
@@ -56,7 +56,7 @@ const BarChartBudget = ({ bombsData }) => {
         }}
       >
         <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='New_project_source_CB' />
+        <XAxis dataKey='new_project' />
         <YAxis label={{ value: 'GtCO2', angle: -90, position: 'insideLeft' }} />
         <Tooltip formatter={(value) => typeof value === 'number' ? value.toFixed(2) : value} />
         <Legend />

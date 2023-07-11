@@ -7,12 +7,12 @@ import 'leaflet/dist/leaflet.css';
 import customColors from '../../palette.js';
 
 interface BombData {
-  New_project_source_CB: boolean;
-  Potential_GtCO2_source_CB: number;
-  Latitude: number;
-  Longitude: number;
-  Carbon_bomb_name_source_CB: string;
-  Country_source_CB: string;
+  new_project: boolean;
+  potential_gtco2: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  country: string;
 }
 
 interface DynamicWorldMapProps {
@@ -40,34 +40,44 @@ const DynamicWorldMap: React.FC<DynamicWorldMapProps> = ({ bombsData, className 
         {bombsData.length > 0
           ? bombsData.map((data, index) => {
 
+
             // Check if Latitude or Longitude are undefined
-            if (!(data.Latitude && 'Latitude' in data) || !(data.Longitude && 'Longitude' in data)) {
-              console.error('Invalid coordinates for bombData:', data);
+            if (!data.latitude || data.latitude === 'None' || !data.longitude || data.longitude === 'None') {
+              // if (!(data.latitude && data.latitude !== 'None' && 'latitude' in data) || !(data.longitude && data.longitude !== 'None' && 'longitude' in data)) {
+              // if (!(data.latitude && 'latitude' in data) || !(data.longitude && 'longitude' in data)) {
+              // console.error('Invalid coordinates for bombData:', data);
               return null; // Don't render a CircleMarker for this bombData
             }
 
-            const color = data.New_project_source_CB
+            const color = data.new_project
               ? customColors.customNew
               : customColors.customExisting; // Change colors based on your preference
-            const radius = data.Potential_GtCO2_source_CB * sizeFactor;
+            const radius = data.potential_gtco2 * sizeFactor;
 
-            // const color = data.New_project_source_CB ? customColors.customNew : customColors.customExisting; // Change colors based on your preference
-            // const radius = data.Potential_GtCO2_source_CB * sizeFactor;
+            console.log(data)
+            // console.log(data.name, data.country, data.new_project, color);
+
+
+            // const color = data.new_project ? customColors.customNew : customColors.customExisting; // Change colors based on your preference
+            // const radius = data.potential_gtco2 * sizeFactor;
 
             return (
               <CircleMarker
                 key={index}
-                center={[data.Latitude, data.Longitude]}
+                center={[data.latitude, data.longitude]}
                 radius={radius}
                 fillOpacity={0.7}
                 color={color}
               >
                 <Popup>
                   <span>
-                    <b>Carbon bomb name:</b> {data.Carbon_bomb_name_source_CB}<br />
-                    <b>Country:</b> {data.Country_source_CB}<br />
-                    <b>Color:</b> {color}<br />
-                    <b>New:</b> {data.New_project_source_CB ? "New" : "Old"}<br />
+                    <span className="text-lg"><a href={data.gem_source} target="_blank"><b>{data.name}</b></a></span><br />
+                    <b>Fuel type:</b> {data.fuel_type}<br />
+                    <b>Country:</b> {data.country}<br />
+                    <b>Operating companies:</b> {data.parent_company}<br />
+                    <b>Potential GtCO2:</b> {data.potential_gtco2.toFixed(2)}<br />
+                    <b>Project completion status:</b> {data.new_project ? "Not started yet" : "Already started"}<br />
+                    {/* <b>Color:</b> {color}<br /> */}
                   </span>
                 </Popup>
               </CircleMarker>

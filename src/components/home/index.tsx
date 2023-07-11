@@ -7,7 +7,7 @@ import CarbonBombSection from '@/components/home/CarbonBombSection';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
 import WorldMap from '@/components/WorldMap';
-
+import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
 import DataContext from '@/modules/contexts/dataContext';
 
 
@@ -15,35 +15,56 @@ const HomePage = () => {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { data } = useContext(DataContext);
-  const [bombsFiltered, setBombsFiltered] = useState([]);
+
+
+  const bombsQuery = `
+  MATCH (p:carbon_bomb)
+  WITH collect(properties(p)) as bombs,collect(distinct p.country) as countries
+  MATCH (c:company)
+  RETURN bombs, countries,collect(distinct c.name) as companies
+  `
+
+  const { data = { bombs: [], countries: [], companies: [] }, loading: dataLoading } = useNeo4jClient(bombsQuery);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
 
-  useEffect(() => {
-    const filterData = () => {
-      if (selectedCompanies.length || selectedCountries.length) {
-        const filtered = data.bombs.filter(
-          (item) =>
-            (!selectedCompanies.length ||
-              item.Parent_company_source_GEM.some((company) =>
-                selectedCompanies.find(
-                  (option) => option.value === company.company
-                )
-              )) &&
-            (!selectedCountries.length ||
-              selectedCountries.some(
-                (option) => option.value === item.Country_source_CB
-              ))
-        );
-        setBombsFiltered(filtered);
-      } else {
-        setBombsFiltered(data.bombs);
-      }
-    };
+  let query = '';
 
-    filterData();
-  }, [data, selectedCompanies, selectedCountries]);
+  if (selectedCountries.length === 0 && selectedCompanies.length > 0) {
+    // filter only by company
+    query = `
+          MATCH (p:carbon_bomb)-[:OPERATES]-(c:company)
+          WHERE c.name IN ${JSON.stringify(selectedCompanies.map(el => el.value))}
+          WITH collect(properties(p)) as bombs
+          RETURN bombs
+      `;
+  } else if (selectedCountries.length > 0 && selectedCompanies.length === 0) {
+    // filter only by country
+    query = `
+          MATCH (p:carbon_bomb)
+          WHERE p.country IN ${JSON.stringify(selectedCountries.map(el => el.value))}
+          WITH collect(properties(p)) as bombs
+          RETURN bombs
+      `;
+  } else if (selectedCountries.length > 0 && selectedCompanies.length > 0) {
+    // filter by both country and company
+    query = `
+          MATCH (p:carbon_bomb)-[:OPERATES]-(c:company)
+          WHERE p.country IN ${JSON.stringify(selectedCountries.map(el => el.value))} AND c.name IN ${JSON.stringify(selectedCompanies.map(el => el.value))}
+          WITH collect(properties(p)) as bombs
+          RETURN bombs
+      `;
+  } else {
+    // neither filter is applied, return all carbon_bomb nodes
+    query = `
+          MATCH (p:carbon_bomb)
+          WITH collect(properties(p)) as bombs
+          RETURN bombs
+      `;
+  }
+
+  const { data: dataFiltered, loading: mapLoading } = useNeo4jClient(query);
+
 
   return (
     <>
@@ -73,17 +94,14 @@ const HomePage = () => {
         </div>
       </div>
       <SectionKPIs />
-      {/* <CarbonBombInfo /> */}
-
-      {/* <BanksSection /> */}
-      {/* <OrdersOfMagnitudeSection /> */}
       <div className='z-[9000] my-5'>
         <h2 className='mb-5 text-2xl font-bold' id='map'>
           Carbon bombs and key stakeholders worldwide
         </h2>
+
         <div className='flex justify-center'>
           <Select
-            options={data.companies?.map((company) => ({
+            options={data.companies?.sort().map((company) => ({
               value: company,
               label: company,
             }))}
@@ -93,7 +111,7 @@ const HomePage = () => {
             onChange={(newValue) => setSelectedCompanies(newValue as any)}
           />
           <Select
-            options={data.countries?.map((country) => ({
+            options={data.countries?.sort().map((country) => ({
               value: country,
               label: country,
             }))}
@@ -104,12 +122,11 @@ const HomePage = () => {
           />
         </div>
       </div>
-      {/* <DataSection /> */}
 
       <>
-        {bombsFiltered?.length > 0 ? (
+        {dataFiltered.bombs?.length > 0 ? (
           <>
-            <WorldMap bombsData={bombsFiltered} />
+            <WorldMap bombsData={dataFiltered.bombs} />
           </>
         ) : (
           <p>Loading...</p>
@@ -127,6 +144,7 @@ const HomePage = () => {
           <p>Loading...</p>
         )}
       </>
+      {/* <DataSection /> */}
 
       {/* <div>
         <NetworkGraphSection bombs={bombsFiltered} countries={selectedCountries} companies={selectedCompanies} />

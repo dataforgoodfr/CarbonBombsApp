@@ -1,9 +1,9 @@
 const customColors = {
-  'customExisting': '#070a52',
-  'customNew': '#d21312',
-  'customBudget': '#454545',
-  'customOilGas': "#9babb8",
-  'customCoal': "#967e76",
+  'customExisting': '#ccb880',
+  'customNew': '#884a5e',
+  'customBudget': '#85a094',
+  'customOilGas': "#a0838f",
+  'customCoal': "#d2927e",
 }
 
 export default customColors;

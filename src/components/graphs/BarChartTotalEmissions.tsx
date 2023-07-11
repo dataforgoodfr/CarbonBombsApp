@@ -16,19 +16,19 @@ import customColors from '../../../palette.js';
 const prepareData = (data) => {
   const newData = data.reduce((acc, item) => {
     let existing = acc.find(
-      (a) => a.New_project_source_CB === item.New_project_source_CB
+      (a) => a.new_project === item.new_project
     );
 
     if (existing) {
-      existing[item.Fuel_type_source_CB] =
-        existing[item.Fuel_type_source_CB] || 0;
-      existing[item.Fuel_type_source_CB] += parseFloat(
-        item.Potential_GtCO2_source_CB
+      existing[item.fuel_type] =
+        existing[item.fuel_type] || 0;
+      existing[item.fuel_type] += parseFloat(
+        item.potential_gtco2
       );
     } else {
       existing = {
-        New_project_source_CB: item.New_project_source_CB,
-        [item.Fuel_type_source_CB]: parseFloat(item.Potential_GtCO2_source_CB),
+        new_project: item.new_project,
+        [item.fuel_type]: parseFloat(item.potential_gtco2),
       };
       acc.push(existing);
     }
@@ -38,7 +38,7 @@ const prepareData = (data) => {
 
   // Post-processing: Replace boolean values with string
   newData.forEach((item) => {
-    item.New_project_source_CB = item.New_project_source_CB
+    item.new_project = item.new_project
       ? 'New projects'
       : 'Existing projects';
   });
@@ -53,7 +53,7 @@ const BarChartTotalEmissions = ({ bombsData }) => {
 
   const data = prepareData(bombsData);
   const fuelTypes = Array.from(
-    new Set(bombsData.map((item) => item.Fuel_type_source_CB))
+    new Set(bombsData.map((item) => item.fuel_type))
   ); // extract unique fuel types
 
   const colors = {
@@ -88,7 +88,7 @@ const BarChartTotalEmissions = ({ bombsData }) => {
         }}
       >
         <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='New_project_source_CB' />
+        <XAxis dataKey='new_project' />
         <YAxis label={{ value: 'GtCO2', angle: -90, position: 'insideLeft' }} />
         <Tooltip formatter={(value) => typeof value === 'number' ? value.toFixed(2) : value} />
         <Legend />c
