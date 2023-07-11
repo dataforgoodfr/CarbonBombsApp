@@ -82,3 +82,10 @@ SUM(b.potential_gtco2) AS total_gtCO2_potential
 ORDER BY c.name, total_gtCO2_potential DESC
 LIMIT 1
 `;
+
+export const companyNetworkGraphQuery = (
+  name
+) => `MATCH path=(c:company)-[r1:OPERATES]->(p:carbon_bomb)
+WHERE c.name = '${name}'
+WITH COLLECT(DISTINCT nodes(path)) AS allNodes, COLLECT(DISTINCT relationships(path)) AS allRels
+RETURN {nodes: allNodes, edges: allRels} as data`;

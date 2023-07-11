@@ -10,9 +10,40 @@ import {
   companyDetailsQuery,
   companiesNameQuery,
   companyMainFuelTypeQuery,
+  companyNetworkGraphQuery,
 } from '@/utils/neo4j';
 
+import NetworkGraphSection from '@/components/network';
 import DataContext from '@/modules/contexts/dataContext';
+
+const prepareNetworkGraphData = (data) => {
+  if (!data) return;
+  const nodes = [...data.nodes.map((nodeArr) => nodeArr[1]), data.nodes[0][0]];
+  const edges = [...data.edges.map((edgeArr) => edgeArr[0])];
+
+  return {
+    edges: edges.map((edge) => ({
+      // id: edge.identity,
+      id: edge.elementId,
+      // source: edge.start,
+      source: edge.startNodeElementId,
+      // target: edge.end,
+      target: edge.endNodeElementId,
+    })),
+    nodes: nodes.map((node) => ({
+      id: node.elementId,
+      name: node.properties.name,
+      label: node.properties.name,
+      type: node.labels[0],
+      size: node.properties.potential_gtco2,
+      metadata: node.properties,
+    })),
+  };
+};
+//   {
+//   nodes: [...data.c, ...data.co, ...data.p],
+//   edges: [...data.r1, ...data.r2],
+// }
 
 const CompaniesIndex = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -22,22 +53,33 @@ const CompaniesIndex = () => {
   // const [bombsFiltered, setBombsFiltered] = useState([]);
   // const [selectedCompanies, setSelectedCompanies] = useState([]);
 
-  const { data: companyFinancing = [] } = useNeo4jClient(
+  const { data: companyFinancing = {} } = useNeo4jClient(
     companyFinancingQuery(name)
   );
 
-  const { data: companyDetails = [] } = useNeo4jClient(
+  const { data: companyDetails = {} } = useNeo4jClient(
     companyDetailsQuery(name)
   );
 
-  const { data: companyMainFuelType = [] } = useNeo4jClient(
+  const { data: companyMainFuelType = {} } = useNeo4jClient(
     companyMainFuelTypeQuery(name)
   );
 
-  const { data: companyNames = [] } = useNeo4jClient(companiesNameQuery);
+  const { data: companyNames = {} } = useNeo4jClient(companiesNameQuery);
+
+  const { data: companyNetworkGraph = {} } = useNeo4jClient(
+    companyNetworkGraphQuery(name)
+  );
+
+  const networkGraphData = companyNetworkGraph
+    ? prepareNetworkGraphData(companyNetworkGraph.data)
+    : {};
 
   // const { companies, loading } = useContext(ComapniesContext);
 
+  console.log(companyDetails);
+  // console.log(nodes);
+  // console.log(edges);
   // if (loading) return <div className='py-12'>Loading...</div>;
 
   // filter only by company
@@ -74,13 +116,13 @@ const CompaniesIndex = () => {
       <div className='mb-12 flex gap-x-8 gap-y-4'>
         <div className='h-72 w-3/5 min-w-[35rem] rounded-xl bg-white p-10 shadow'>
           <div className='mb-8 flex items-center gap-x-8'>
-            <div className='text-3xl font-bold'>{companyDetails[0]?.name}</div>
+            <div className='text-3xl font-bold'>{companyDetails?.name}</div>
             <div className='max-w-[12rem]'>
               <img
                 className='mr-8 w-24'
                 src={
-                  companyDetails[0]?.url_logo !== 'None'
-                    ? companyDetails[0]?.url_logo
+                  companyDetails?.url_logo !== 'None'
+                    ? companyDetails?.url_logo
                     : ''
                 }
               />
@@ -88,7 +130,7 @@ const CompaniesIndex = () => {
           </div>
           <div className='flex gap-x-4'>
             <div className='w-40 text-gray-500'>Country</div>
-            <div className='font-bold'>{companyDetails[0]?.country}</div>
+            <div className='font-bold'>{companyDetails?.country}</div>
           </div>
           {/* <div className='flex gap-x-4'>
                 <div className='w-40 text-gray-500'>CEO Name</div>
@@ -97,7 +139,7 @@ const CompaniesIndex = () => {
           <div className='flex gap-x-4'>
             <div className='w-40 text-gray-500'>Main fuel type</div>
             <div className='font-bold'>
-              {companyMainFuelType[0]?.main_fuel_type}
+              {companyMainFuelType?.main_fuel_type}
             </div>
           </div>
         </div>
@@ -106,13 +148,13 @@ const CompaniesIndex = () => {
             <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
               <div>Number of carbon bombs owned</div>
               <div className='text-3xl font-bold'>
-                {companyDetails[0]?.nb_cBombs?.low}
+                {companyDetails?.nb_cBombs?.low}
               </div>
             </div>
             <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
               <div>Average carbon bomb ownership</div>
               <div className='text-3xl font-bold'>
-                {`${companyDetails[0]?.avg_ownership_share?.toFixed(1)} %`}
+                {`${companyDetails?.avg_ownership_share?.toFixed(1)} %`}
               </div>
             </div>
           </div>
@@ -120,15 +162,15 @@ const CompaniesIndex = () => {
             <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
               <div>Combined potential CO2 from carbon bombs</div>
               <div className='text-2xl font-bold'>
-                {`${companyDetails[0]?.tot_gtCO2_potential.toFixed(1)} GtCO2e`}
+                {`${companyDetails?.tot_gtCO2_potential?.toFixed(1)} GtCO2e`}
               </div>
             </div>
             <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
               <div>Financing received from banks ('18-'22)</div>
               <div className='text-3xl font-bold'>
-                {companyFinancing[0]
+                {companyFinancing
                   ? `${(
-                    companyFinancing[0]?.last5yFossilFinancing /
+                    companyFinancing?.last5yFossilFinancing /
                     10 ** 9
                   ).toFixed(1)} Mds$`
                   : 'unknown'}
@@ -148,14 +190,15 @@ const CompaniesIndex = () => {
         )}
       </div>
 
-      {companyFinancing[0] && (
+      {!!companyFinancing?.length && (
         <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
           <div className='text-xl'>
             Total financing to fossil fuel producers by year
           </div>
-          <BarChartCompanyFinancing company={companyFinancing[0]} />
+          <BarChartCompanyFinancing company={companyFinancing} />
         </div>
       )}
+      <NetworkGraphSection data={networkGraphData} />
       {/* <div className='flex gap-x-8 gap-y-4'>
         <div className='h-[34rem] w-3/5 min-w-[25rem] rounded-xl bg-white shadow'>
           <WorldMap bombsData={bombsFiltered} className='h-full w-full' />
