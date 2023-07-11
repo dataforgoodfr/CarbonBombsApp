@@ -120,3 +120,11 @@ WITH collect(DISTINCT {
         target: id(endNode(r2))
       }) as r2_rels
   RETURN company_nodes, co_nodes, carbon_bomb_nodes, r1_rels, r2_rels`;
+
+export const topContributorBankQuery = (
+  name
+) => `MATCH (b:bank)-[f:FINANCES]->(c:company)
+WHERE b.name = '${name}'
+RETURN c.name as company, c.world_region as company_region, f.total AS financing
+ORDER BY f.total DESC
+LIMIT 5`;

@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 
 import BarChartBankFinancing from '@/components/graphs/BarChartBankFinancing';
+import BarChartBankTopContributor from '@/components/graphs/BarChartBankTopContributor';
 
 import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
-import { bankDetailsQuery, banksNameQuery } from '@/utils/neo4j';
+import {
+  bankDetailsQuery,
+  banksNameQuery,
+  topContributorBankQuery,
+} from '@/utils/neo4j';
 
 const BanksIndex = () => {
   // const { data } = useContext(DataContext);
@@ -41,6 +46,13 @@ const BanksIndex = () => {
   const { data: bank = {}, loading: detailsLoading } = useNeo4jClient(
     bankDetailsQuery(name)
   );
+
+  const { data: topContributorBank = {} } = useNeo4jClient(
+    topContributorBankQuery(name)
+  );
+
+  console.log(topContributorBank);
+
   const { data: banksName = [], loading: namesLoading } =
     useNeo4jClient(banksNameQuery);
 
@@ -113,6 +125,12 @@ const BanksIndex = () => {
             Total financing to fossil fuel producers by year
           </div>
           <BarChartBankFinancing bank={bank} />
+        </div>
+        <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
+          <div className='text-xl'>
+            Top 5 financing of fossil fuels companies
+          </div>
+          <BarChartBankTopContributor topContributorBank={topContributorBank} />
         </div>
       </div>
     </div>
