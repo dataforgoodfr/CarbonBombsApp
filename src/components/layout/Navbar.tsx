@@ -31,20 +31,30 @@ const Navbar = () => {
       <div className='hidden pr-12 lg:flex lg:items-center'>
         <div>
           <Link
+            href='faq'
+            className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
+          >
+            FAQ
+          </Link>
+          <Link
             href='banks'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
             Banks involved
           </Link>
-          <a href='/data/carbon_bombs_informations.csv' download>
-            Download Data
-          </a>
-          {/* <Link
+          <Link
             href='companies'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'
           >
             Companies involved
-          </Link> */}
+          </Link>
+          <a
+            className='mr-4'
+            href='/data/carbon_bombs_informations.csv'
+            download
+          >
+            Download Data
+          </a>
           {/* <a
             href='#map'
             className='mr-4 block text-black hover:text-gray-500 lg:inline-block'

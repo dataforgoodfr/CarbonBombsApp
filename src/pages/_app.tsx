@@ -1,6 +1,5 @@
 import { AppProps } from 'next/app';
 import '@fontsource/inter';
-import '@fontsource/poppins';
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately

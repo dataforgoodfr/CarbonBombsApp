@@ -4,15 +4,14 @@ import Select from 'react-select';
 
 import CarbonBombInfo from '@/components/home/CarbonBombInfo';
 import CarbonBombSection from '@/components/home/CarbonBombSection';
+import CarbonBombSchema from '@/components/home/CarbonBombSchema';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
 import WorldMap from '@/components/WorldMap';
 import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
 import DataContext from '@/modules/contexts/dataContext';
 
-
 const HomePage = () => {
-
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 
@@ -94,6 +93,9 @@ const HomePage = () => {
         </div>
       </div>
       <SectionKPIs />
+
+      {/* <BanksSection /> */}
+      {/* <OrdersOfMagnitudeSection /> */}
       <div className='z-[9000] my-5'>
         <h2 className='mb-5 text-2xl font-bold' id='map'>
           Carbon bombs and key stakeholders worldwide
@@ -137,6 +139,7 @@ const HomePage = () => {
         {data.bombs?.length > 0 ? (
           <>
             <CarbonBombInfo />
+            <CarbonBombSchema />
             <CarbonBombSection bombsData={data.bombs} />
             <TimeToActSection bombsData={data.bombs} />
           </>
