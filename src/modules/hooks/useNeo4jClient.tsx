@@ -14,7 +14,10 @@ const useNeo4jClient = (query) => {
           query,
         }),
       });
-      const jsonData = await res.json();
+      let jsonData = await res.json();
+      if (jsonData.length === 1) {
+        jsonData = jsonData[0]
+      }
       setLoading(false);
       setData(jsonData);
     };
