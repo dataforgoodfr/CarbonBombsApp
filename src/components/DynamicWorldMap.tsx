@@ -53,8 +53,6 @@ const DynamicWorldMap: React.FC<DynamicWorldMapProps> = ({ bombsData, className 
               ? customColors.customNew
               : customColors.customExisting; // Change colors based on your preference
             const radius = data.potential_gtco2 * sizeFactor;
-
-            console.log(data)
             // console.log(data.name, data.country, data.new_project, color);
 
 

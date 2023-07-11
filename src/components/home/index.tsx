@@ -7,6 +7,7 @@ import CarbonBombSection from '@/components/home/CarbonBombSection';
 import CarbonBombSchema from '@/components/home/CarbonBombSchema';
 import SectionKPIs from '@/components/home/SectionKPIs';
 import TimeToActSection from '@/components/home/TimeToActSection';
+import AnalyticsSection from '@/components/home/AnalyticsSection';
 import WorldMap from '@/components/WorldMap';
 import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
 import DataContext from '@/modules/contexts/dataContext';
@@ -96,6 +97,7 @@ const HomePage = () => {
 
       {/* <BanksSection /> */}
       {/* <OrdersOfMagnitudeSection /> */}
+      <CarbonBombInfo />
       <div className='z-[9000] my-5'>
         <h2 className='mb-5 text-2xl font-bold' id='map'>
           Carbon bombs and key stakeholders worldwide
@@ -138,7 +140,6 @@ const HomePage = () => {
       <>
         {data.bombs?.length > 0 ? (
           <>
-            <CarbonBombInfo />
             <CarbonBombSchema />
             <CarbonBombSection bombsData={data.bombs} />
             <TimeToActSection bombsData={data.bombs} />
@@ -147,7 +148,7 @@ const HomePage = () => {
           <p>Loading...</p>
         )}
       </>
-      {/* <DataSection /> */}
+      {/* <AnalyticsSection /> */}
 
       {/* <div>
         <NetworkGraphSection bombs={bombsFiltered} countries={selectedCountries} companies={selectedCompanies} />
