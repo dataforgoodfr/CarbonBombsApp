@@ -6,17 +6,6 @@ import BarChartBankFinancing from '@/components/graphs/BarChartBankFinancing';
 import useNeo4jClient from '@/modules/hooks/useNeo4jClient';
 import { bankDetailsQuery, banksNameQuery } from '@/utils/neo4j';
 
-const groupByFirstLetter = (banks) => {
-  return banks.reduce((result, bank) => {
-    const letter = bank.Name[0].toUpperCase();
-    if (!result[letter]) {
-      result[letter] = [];
-    }
-    result[letter].push(bank);
-    return result;
-  }, {});
-};
-
 const BanksIndex = () => {
   // const { data } = useContext(DataContext);
   const [name, setName] = useState('ICBC');

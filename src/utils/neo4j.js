@@ -85,7 +85,38 @@ LIMIT 1
 
 export const companyNetworkGraphQuery = (
   name
-) => `MATCH path=(c:company)-[r1:OPERATES]->(p:carbon_bomb)
+) => `MATCH (c:company)-[r1:OPERATES]->(p:carbon_bomb)
 WHERE c.name = '${name}'
-WITH COLLECT(DISTINCT nodes(path)) AS allNodes, COLLECT(DISTINCT relationships(path)) AS allRels
-RETURN {nodes: allNodes, edges: allRels} as data`;
+OPTIONAL MATCH (p)<-[r2:OPERATES]-(co:company)
+WITH collect(DISTINCT {
+        id: id(c),
+        name: c.name,
+        label: head(labels(c)),
+        type: labels(c),
+        metadata: properties(c)
+      }) as company_nodes,
+     collect(DISTINCT {
+        id: id(co),
+        name: co.name,
+        label: head(labels(co)),
+        type: labels(co),
+        metadata: properties(co)
+      }) as co_nodes,
+     collect(DISTINCT {
+        id: id(p),
+        name: p.name,
+        label: head(labels(p)),
+        type: labels(p),
+        metadata: properties(p)
+      }) as carbon_bomb_nodes,
+     collect(DISTINCT {
+        id: id(r1),
+        source: id(startNode(r1)),
+        target: id(endNode(r1))
+      }) as r1_rels,
+     collect(DISTINCT {
+        id: id(r2),
+        source: id(startNode(r2)),
+        target: id(endNode(r2))
+      }) as r2_rels
+  RETURN company_nodes, co_nodes, carbon_bomb_nodes, r1_rels, r2_rels`;

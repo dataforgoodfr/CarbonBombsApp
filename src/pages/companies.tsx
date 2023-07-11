@@ -14,30 +14,46 @@ import {
   companyNetworkGraphQuery,
 } from '@/utils/neo4j';
 
+import customColors from '../../palette.js';
+
 import NetworkGraphSection from '@/components/network';
 import DataContext from '@/modules/contexts/dataContext';
 
-const prepareNetworkGraphData = (data) => {
+const pickColorForNetworkGraph = (nodeType, nodeName, selectedCompanyName) => {
+  if (nodeType !== 'company') return customColors.customBomb;
+  if (nodeName === selectedCompanyName)
+    return customColors.customCompanySelected;
+
+  return customColors.customCompanyLinked;
+};
+
+const prepareNetworkGraphData = (data, selectedCompanyName) => {
   if (!data) return;
-  const nodes = [...data.nodes.map((nodeArr) => nodeArr[1]), data.nodes[0][0]];
-  const edges = [...data.edges.map((edgeArr) => edgeArr[0])];
 
   return {
-    edges: edges.map((edge) => ({
-      // id: edge.identity,
-      id: edge.elementId,
-      // source: edge.start,
-      source: edge.startNodeElementId,
-      // target: edge.end,
-      target: edge.endNodeElementId,
+    edges: [...data.r1_rels, ...data.r2_rels].map((edge) => ({
+      id: edge.id.low,
+      source: edge.source.low,
+      target: edge.target.low,
     })),
-    nodes: nodes.map((node) => ({
-      id: node.elementId,
-      name: node.properties.name,
-      label: node.properties.name,
-      type: node.labels[0],
-      size: node.properties.potential_gtco2,
-      metadata: node.properties,
+    nodes: [
+      ...data.carbon_bomb_nodes,
+      ...data.co_nodes,
+      ...data.carbon_bomb_nodes,
+    ].map((node) => ({
+      id: node.id.low,
+      name: node.name,
+      label: node.name,
+      type: node.type[0],
+      fill: pickColorForNetworkGraph(
+        node.type[0],
+        node.name,
+        selectedCompanyName
+      ),
+      size: node.metadata.potential_gtco2
+        ? node.metadata.potential_gtco2 * 5
+        : undefined,
+      metadata: node.metadata,
     })),
   };
 };
@@ -72,13 +88,12 @@ const CompaniesIndex = () => {
     companyNetworkGraphQuery(name)
   );
 
-  const networkGraphData = companyNetworkGraph
-    ? prepareNetworkGraphData(companyNetworkGraph.data)
+  const networkGraphData = companyNetworkGraph?.company_nodes
+    ? prepareNetworkGraphData(companyNetworkGraph, name)
     : {};
 
   // const { companies, loading } = useContext(ComapniesContext);
 
-  console.log(companyDetails);
   // console.log(nodes);
   // console.log(edges);
   // if (loading) return <div className='py-12'>Loading...</div>;
