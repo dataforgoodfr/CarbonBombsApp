@@ -11,9 +11,40 @@ import {
   companyDetailsQuery,
   companiesNameQuery,
   companyMainFuelTypeQuery,
+  companyNetworkGraphQuery,
 } from '@/utils/neo4j';
 
+import NetworkGraphSection from '@/components/network';
 import DataContext from '@/modules/contexts/dataContext';
+
+const prepareNetworkGraphData = (data) => {
+  if (!data) return;
+  const nodes = [...data.nodes.map((nodeArr) => nodeArr[1]), data.nodes[0][0]];
+  const edges = [...data.edges.map((edgeArr) => edgeArr[0])];
+
+  return {
+    edges: edges.map((edge) => ({
+      // id: edge.identity,
+      id: edge.elementId,
+      // source: edge.start,
+      source: edge.startNodeElementId,
+      // target: edge.end,
+      target: edge.endNodeElementId,
+    })),
+    nodes: nodes.map((node) => ({
+      id: node.elementId,
+      name: node.properties.name,
+      label: node.properties.name,
+      type: node.labels[0],
+      size: node.properties.potential_gtco2,
+      metadata: node.properties,
+    })),
+  };
+};
+//   {
+//   nodes: [...data.c, ...data.co, ...data.p],
+//   edges: [...data.r1, ...data.r2],
+// }
 
 const CompaniesIndex = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -37,8 +68,18 @@ const CompaniesIndex = () => {
 
   const { data: companyNames = [] } = useNeo4jClient(companiesNameQuery);
 
+  const { data: companyNetworkGraph = [] } = useNeo4jClient(
+    companyNetworkGraphQuery(name)
+  );
+
+  const networkGraphData = companyNetworkGraph[0]
+    ? prepareNetworkGraphData(companyNetworkGraph[0].data)
+    : {};
+
   // const { companies, loading } = useContext(ComapniesContext);
 
+  // console.log(nodes);
+  // console.log(edges);
   // if (loading) return <div className='py-12'>Loading...</div>;
 
   return (
@@ -135,6 +176,7 @@ const CompaniesIndex = () => {
           <BarChartCompanyFinancing company={companyFinancing[0]} />
         </div>
       )}
+      <NetworkGraphSection data={networkGraphData} />
       {/* <div className='flex gap-x-8 gap-y-4'>
         <div className='h-[34rem] w-3/5 min-w-[25rem] rounded-xl bg-white shadow'>
           <WorldMap bombsData={bombsFiltered} className='h-full w-full' />
