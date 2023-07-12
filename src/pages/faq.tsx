@@ -80,7 +80,7 @@ const FAQ_ITEMS = [
     question: 'How did we build this data about carbon bombs?',
     answer: <div>
       Our main work was to create connections between three existing databases:<br /><br />
-      * A database from a scientific publication which provides mapping and descriptions of all the carbon bombs. This publication identifies the 425 biggest fossil fuel extraction projects globally (defined as >1 gigaton potential CO2 emissions), lists them by name, shows the countries in which they are located and calculate their potential emissions (twice the global 1.5°C <a className="text-blue-500" href="https://www.sciencedirect.com/topics/earth-and-planetary-sciences/carbon-budget">carbon budget</a>). (Source: “Carbon Bombs” - Mapping key fossil fuel projects, Kuhne and co-authors, 2022, Energy Policy, Volume 166, 2022)<br /><br />
+      * A database from a scientific publication which provides mapping and descriptions of all the carbon bombs. This publication identifies the 425 biggest fossil fuel extraction projects globally (defined as more than 1 gigaton potential CO2 emissions), lists them by name, shows the countries in which they are located and calculate their potential emissions (twice the global 1.5°C <a className="text-blue-500" href="https://www.sciencedirect.com/topics/earth-and-planetary-sciences/carbon-budget">carbon budget</a>). (Source: “Carbon Bombs” - Mapping key fossil fuel projects, Kuhne and co-authors, 2022, Energy Policy, Volume 166, 2022)<br /><br />
       * Global Energy Monitor (GEM) trackers on oil extraction fields, fossil gas and coal mines: GEM develops and shares open-source and reliable information in support of the worldwide movement for clean energy. We have used GEM comprehensive databases to link the gas plants, coal mines and oil extraction fields with the companies operating them. (Source: <a className="text-blue-500" href="https://www.sciencedirect.com/science/article/pii/S0301421522001756">Global Oil and Gas Extraction Tracker and Global Coal Plant Tracker Global Energy Monitor</a>, 2023 release).<br /><br />
       * Banking on Climate Chaos database: The Banking on Climate Chaos report shows how banks support fossil fuel companies through their financing. This report adds up financing (lending and underwriting of debt and equity issuances) from the world’s 60 biggest banks for the fossil fuel sector as a whole, as well as for top expanders of the fossil fuel industry and top companies in specific sectors. The report assessed each bank’s leading involvement in corporate lending and underwriting transactions (where data was available) between January 1, 2016, and December 31, 2022. Transaction data were primarily sourced from Bloomberg Finance L.P. Additional project finance transactions in the LNG and coal power sectors were researched using the IJGlobal database.<br /><br />
     </div>,
@@ -110,7 +110,7 @@ const FAQ_ITEMS = [
     question: 'Could we compensate for these carbon emissions in order to keep extracting the bombs?',
     answer: <div>Given the scale of the extraction projects, it is unthinkable to pursue these projects solely on the basis of carbon capture. <br /><br />
 
-    For instance, the cumulated emissions of the 425 carbon bombs amount to over 1180 gigatonnes of CO2. In order to compensate for all the emissions from these carbon bombs, we would need to plant between 1,5 and 3,3 times all emerged lands with trees. (This is a rough estimation used to show the magnitude of the surfaces needed. Precise figures should be based on one of the wide variety of methodologies depending on the type of activity, geography and ecosystem where trees would be planted, among many other factors).</div>
+      For instance, the cumulated emissions of the 425 carbon bombs amount to over 1180 gigatonnes of CO2. In order to compensate for all the emissions from these carbon bombs, we would need to plant between 1,5 and 3,3 times all emerged lands with trees. (This is a rough estimation used to show the magnitude of the surfaces needed. Precise figures should be based on one of the wide variety of methodologies depending on the type of activity, geography and ecosystem where trees would be planted, among many other factors).</div>
   }
 ];
 
@@ -124,18 +124,18 @@ const Faq = () => {
         {...FAQ_ITEMS.map((item, index) => {
           const showAnswer = unfoldedQuestionsIndices.includes(index);
           return (
-            <div key={index} className='mb-8 rounded-xl bg-white p-4 shadow'>
+            <div key={index} className='mb-8 rounded-xl bg-white p-4 shadow'
+              onClick={() =>
+                setUnfoldedQuestionsIndices((prevValue) =>
+                  showAnswer
+                    ? [...without(prevValue, index)]
+                    : uniq([...prevValue, index])
+                )
+              }
+            >
               <div className='flex items-center justify-between font-bold'>
                 {item.question}
-                <div
-                  onClick={() =>
-                    setUnfoldedQuestionsIndices((prevValue) =>
-                      showAnswer
-                        ? [...without(prevValue, index)]
-                        : uniq([...prevValue, index])
-                    )
-                  }
-                >
+                <div>
                   {showAnswer ? (
                     <Minus className='h-6 w-6' />
                   ) : (
