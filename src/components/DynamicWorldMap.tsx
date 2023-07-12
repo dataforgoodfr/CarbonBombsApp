@@ -29,7 +29,7 @@ const DynamicWorldMap: React.FC<DynamicWorldMapProps> = ({ bombsData, className 
   const sizeFactor = 1.5;
 
   return (
-    <div className={className ? className : 'h-[700px] w-full'}>
+    <div className={className ? className : 'h-full w-full'}>
       <MapContainer
         center={[51.505, -0.09]}
         zoom={2}

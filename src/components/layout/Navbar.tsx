@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className='sticky left-0 top-0 z-[9999] flex flex-wrap items-center justify-between bg-white bg-white p-3 px-6 shadow-xl'>
       <div className='mr-6 flex flex-shrink-0 items-center justify-center text-black'>
         <Link href='/' className='text-xl font-semibold tracking-tight'>
-          CarbonBombs.org
+          Carbon Bombs
         </Link>
         <Link
           href='/'

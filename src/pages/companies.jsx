@@ -184,9 +184,9 @@ const CompaniesIndex = () => {
               <div className='text-3xl font-bold'>
                 {companyFinancing
                   ? `${(
-                      companyFinancing?.last5yFossilFinancing /
-                      10 ** 9
-                    ).toFixed(1)} Mds$`
+                    companyFinancing?.last5yFossilFinancing /
+                    10 ** 9
+                  ).toFixed(1)} Mds$`
                   : 'unknown'}
               </div>
             </div>
@@ -196,22 +196,24 @@ const CompaniesIndex = () => {
       <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white p-2 shadow'>
         {/* <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'> */}
         {dataFiltered.bombs?.length > 0 ? (
-          <>
+          <div className="h-[600px] w-full">
             <WorldMap bombsData={dataFiltered.bombs} />
-          </>
+          </div>
         ) : (
           <p>Loading Map...</p>
         )}
       </div>
 
-      {!!companyFinancing?.length && (
-        <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
-          <div className='text-xl'>
-            Total financing to fossil fuel producers by year
+      {
+        !!companyFinancing?.length && (
+          <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
+            <div className='text-xl'>
+              Total financing to fossil fuel producers by year
+            </div>
+            <BarChartCompanyFinancing company={companyFinancing} />
           </div>
-          <BarChartCompanyFinancing company={companyFinancing} />
-        </div>
-      )}
+        )
+      }
       <NetworkGraphSection data={networkGraphData} />
       {/* <div className='flex gap-x-8 gap-y-4'>
         <div className='h-[34rem] w-3/5 min-w-[25rem] rounded-xl bg-white shadow'>
@@ -221,7 +223,7 @@ const CompaniesIndex = () => {
           <BarChartBudget bombsData={bombsFiltered} />
         </div>
       </div> */}
-    </div>
+    </div >
   );
 };
 

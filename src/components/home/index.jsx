@@ -129,9 +129,9 @@ const HomePage = () => {
 
       <>
         {dataFiltered.bombs?.length > 0 ? (
-          <>
+          <div className="h-[700px]">
             <WorldMap bombsData={dataFiltered.bombs} />
-          </>
+          </div>
         ) : (
           <p>Loading...</p>
         )}
