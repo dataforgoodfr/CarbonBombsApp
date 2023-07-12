@@ -50,7 +50,8 @@ const Navbar = () => {
           </Link>
           <a
             className='mr-4'
-            href='/data/carbon_bombs_informations.csv'
+            target="_blank"
+            href='https://github.com/dataforgoodfr/CarbonBombs/raw/main/data_cleaned/carbon_bombs_all_datasets.xlsx'
             download
           >
             Download Data
