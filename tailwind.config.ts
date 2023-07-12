@@ -11,11 +11,14 @@ export default {
       },
       colors: {
         background: '#f4f4f4',
-        customExisting: '#4f709c',
-        customNew: '#213555',
-        customBudget: '#cd1818',
-        customOilGas: '#9babb8',
-        customCoal: '#967e76',
+        customExisting: '#ccb880',
+        customNew: '#884a5e',
+        customBudget: '#85a094',
+        customOilGas: '#a0838f',
+        customCoal: '#d2927e',
+        customCompanyLinked: '#C6AAAF',
+        customCompanySelected: '#6869AB',
+        customBomb: '#E74260',
         primary: {
           // Customize it on globals.css :root
           50: 'rgb(var(--tw-color-primary-50) / <alpha-value>)',
