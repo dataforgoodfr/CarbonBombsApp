@@ -193,10 +193,10 @@ const CompaniesIndex = () => {
           </div>
         </div>
       </div>
-      <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white p-2 shadow'>
+      <div className='flex w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white p-2 shadow'>
         {/* <div className='flex w-1/2 min-w-[12rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'> */}
         {dataFiltered.bombs?.length > 0 ? (
-          <div className="h-[600px] w-full">
+          <div className="h-full w-full">
             <WorldMap bombsData={dataFiltered.bombs} />
           </div>
         ) : (

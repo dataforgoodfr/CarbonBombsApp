@@ -24,9 +24,11 @@ const WorldMap: React.FC<WorldMapProps> = ({ bombsData, className }) => {
   }, []);
 
   return isClient ? (
-    <div className="h-full w-full">
-      <DynamicWorldMap className={className} bombsData={bombsData} />
-      <p className="mt-4 mb-4 text-sm"><span className="text-yellow-500">Operating projects</span> / <span className="text-red-900">New projects</span> - Size depends on the potential GtCO2 generated per carbon bomb</p>
+    <div className="h-full w-full pb-2">
+      <div className="h-[700px]">
+        <DynamicWorldMap className={className} bombsData={bombsData} />
+      </div>
+      <p className="mt-4 ml-4 text-sm"><span className="text-yellow-500">Operating projects</span> / <span className="text-red-900">New projects</span> - Size depends on the potential GtCO2 generated per carbon bomb</p>
     </div>
   ) : null;
 };

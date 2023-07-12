@@ -129,7 +129,7 @@ const HomePage = () => {
 
       <>
         {dataFiltered.bombs?.length > 0 ? (
-          <div className="h-[700px]">
+          <div className="mb-10">
             <WorldMap bombsData={dataFiltered.bombs} />
           </div>
         ) : (
