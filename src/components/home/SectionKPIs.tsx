@@ -30,9 +30,9 @@ const SectionKPIs = () => (
         </div>
         <div className='mb-4 w-full px-4 sm:w-1/2 lg:w-1/4'>
           <div className='flex h-full flex-col items-stretch rounded-lg bg-white p-6 shadow'>
-            <h3 className='mb-1 text-5xl font-bold'>30</h3>
-            <div className='font-bold'>MAJOR COMPANIES AND BANKS</div>
-            <p className='mt-2'>are involved in the 425 projects.</p>
+            <h3 className='mb-1 text-5xl font-bold'>2021</h3>
+            <div className='font-bold'>There should be no new fossil investments from that year</div>
+            <p className='mt-2'>IEA executive director called for a ban on new investments in oil, gas and coal after 2021</p>
           </div>
         </div>
         <div className='mb-4 w-full px-4 sm:w-1/2 lg:w-1/4'>

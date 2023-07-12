@@ -112,7 +112,7 @@ const HomePage = () => {
             className='z-[9000] mx-3 w-1/2'
             placeholder='Select a company...'
             isMulti
-            onChange={(newValue) => setSelectedCompanies(newValue as any)}
+            onChange={(newValue) => setSelectedCompanies(newValue)}
           />
           <Select
             options={data.countries?.sort().map((country) => ({
@@ -122,7 +122,7 @@ const HomePage = () => {
             className='z-[9000] mx-3 w-1/2'
             placeholder='Select a country...'
             isMulti
-            onChange={(newValue) => setSelectedCountries(newValue as any)}
+            onChange={(newValue) => setSelectedCountries(newValue)}
           />
         </div>
       </div>

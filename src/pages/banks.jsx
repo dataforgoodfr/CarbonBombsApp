@@ -95,21 +95,21 @@ const BanksIndex = () => {
         <div className='flex h-72 w-2/5 flex-col gap-y-4'>
           <div className='flex h-1/2 gap-x-4'>
             <div className='flex w-1/2 min-w-[10rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
-              <div>Financing to fossil fuel producers</div>
+              <div>Financing to carbon bombs operators</div>
               <div className='text-3xl font-bold'>{`${(
                 bank?.totalFossilFinancing /
                 10 ** 9
               ).toFixed(1)} Md$`}</div>
             </div>
             <div className='flex w-1/2 min-w-[10rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
-              <div>Number of fussil fuel producers financed</div>
+              <div>Number of carbon bombs operators financed</div>
               <div className='text-3xl font-bold'>
                 {bank?.FF_companies_financed?.low}
               </div>
             </div>
           </div>
           <div className='flex h-1/2 min-w-[21rem] flex-col gap-y-4 rounded-xl bg-white p-4 text-sm shadow'>
-            <div>Fossil Fuel financing trends ('22 vs prev 6y)</div>
+            <div>Carbon bombs operators financing trends ('22 vs prev 6y)</div>
             <div className='text-3xl font-bold'>{`${(
               bank?.var22VsPrev6y * 100
             ).toFixed(1)}%`}</div>
@@ -122,13 +122,13 @@ const BanksIndex = () => {
         </div> */}
         <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
           <div className='text-xl'>
-            Total financing to fossil fuel producers by year
+            Total financing to carbon bombs operators by year
           </div>
           <BarChartBankFinancing bank={bank} />
         </div>
         <div className='flex h-[34rem] w-full min-w-[21rem] flex-col flex-col items-center justify-center gap-y-4 rounded-xl bg-white shadow'>
           <div className='text-xl'>
-            Top 5 financing of fossil fuels companies
+            Top 5 financing of carbon bombs operators
           </div>
           <BarChartBankTopContributor topContributorBank={topContributorBank} />
         </div>

@@ -38,8 +38,14 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/components/home/OrdersOfMagnitudeSection.jsx"  ],
+    "**/*.tsx",
+    "src/components/home/OrdersOfMagnitudeSection.jsx",
+    "src/components/WorldMap.jsx",
+    "src/components/DynamicWorldMap.jsx",
+    "src/pages/companies.jsx",
+    "src/pages/banks.jsx",
+    "src/components/home/index.jsx"
+  ],
   "exclude": [
     "node_modules"
   ],

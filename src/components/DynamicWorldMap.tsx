@@ -9,10 +9,13 @@ import customColors from '../../palette.js';
 interface BombData {
   new_project: boolean;
   potential_gtco2: number;
-  latitude: number;
-  longitude: number;
+  latitude: number | 'None';
+  longitude: number | 'None';
   name: string;
   country: string;
+  gem_source: string;
+  fuel_type: string;
+  parent_company: string;
 }
 
 interface DynamicWorldMapProps {
@@ -26,7 +29,7 @@ const DynamicWorldMap: React.FC<DynamicWorldMapProps> = ({ bombsData, className 
   const sizeFactor = 1.5;
 
   return (
-    <div className={className ? className : 'h-screen w-full'}>
+    <div className={className ? className : 'h-[700px] w-full'}>
       <MapContainer
         center={[51.505, -0.09]}
         zoom={2}
@@ -43,8 +46,6 @@ const DynamicWorldMap: React.FC<DynamicWorldMapProps> = ({ bombsData, className 
 
             // Check if Latitude or Longitude are undefined
             if (!data.latitude || data.latitude === 'None' || !data.longitude || data.longitude === 'None') {
-              // if (!(data.latitude && data.latitude !== 'None' && 'latitude' in data) || !(data.longitude && data.longitude !== 'None' && 'longitude' in data)) {
-              // if (!(data.latitude && 'latitude' in data) || !(data.longitude && 'longitude' in data)) {
               // console.error('Invalid coordinates for bombData:', data);
               return null; // Don't render a CircleMarker for this bombData
             }
